@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "libft.h"
 #include "fdf.h"
+//#include "libft.h"
+//#include "mlx.h"
 
 #include <stdio.h>
 void 	draw(t_mlx *mlx)
@@ -20,6 +20,7 @@ void 	draw(t_mlx *mlx)
 	int x;
 	int y;
 
+	mlx_string_put(mlx->mlx, mlx->window, 10, 10, 0x00FFFFFF, "Hello World!");
 	y = 50;
 	while (y < 150)
 	{
