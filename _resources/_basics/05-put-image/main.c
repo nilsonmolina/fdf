@@ -6,13 +6,12 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/01 21:18:15 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/01 21:01:21 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// remove this before turning in
 #include <stdio.h>
 #include <sys/time.h>
 struct timeval stop, start;
@@ -56,9 +55,9 @@ void	put_image_square(t_mlx *mlx)
 		while (x < 100)
 		{
 			i = (x * 4) + (y * square.stride);
-			square.img_data[i++] = (char)64; // blue
-			square.img_data[i++] = (char)64; // green
-			square.img_data[i++] = (char)64; // red
+			square.img_data[i++] = (char)255; // blue
+			square.img_data[i++] = (char)255; // green
+			square.img_data[i++] = (char)255; // red
 			x++;
 		}
 		y++;

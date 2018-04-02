@@ -16,8 +16,9 @@ OBJS = $(addprefix $(OBJDIR)/, $(OBJ))
 
 # compiler
 CC = gcc
-CFLAGS = -c -Wall -Werror -Wextra 
-LIBS = $(LIBDIR)/libft.a -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
+CFLAGS = -c -Wall -Werror -Wextra
+LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
+# LIBS = $(LIBDIR)/libft.a $(MLXDIR)/libmlx.a -framework OpenGL -framework Appkit # also works?!?!
 HEADERS = -I includes -I $(LIBDIR)/includes -I $(MLXDIR)
 
 # prevent name collisions with files in the directory.
@@ -27,23 +28,24 @@ all: $(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
+	@echo "[$(CC)] - $<"
 	@$(CC) $(CFLAGS) $(HEADERS) $< -o $@
 
 $(NAME): $(OBJS)
 	@make -C $(MLXDIR)
 	@make -C $(LIBDIR)
 	@$(CC) $(OBJS) $(LIBS) -o $@
-	@echo "- fdf ready"
+	@echo "- $(NAME) built and ready"
 
 clean:
 	@/bin/rm -rf $(OBJDIR)
 	@make -C $(MLXDIR) clean
 	@make -C $(LIBDIR) clean
-	@echo "- fdf cleaned"
+	@echo "- $(NAME) cleaned"
 
 fclean: clean
 	@/bin/rm -f $(NAME)
-	@rm -f $(LIBDIR)/libft.a
-	@echo "- fdf fcleaned"
+	@make -C $(LIBDIR) fclean
+	@echo "- $(NAME) fcleaned"
 
 re: fclean all
