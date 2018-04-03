@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 14:41:58 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/15 17:46:03 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/02 15:30:17 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,8 @@ int				ft_islower(int c);
 char			*ft_str_capitalizer(char *str);
 int				ft_wordcount(char *str, char delimiter);
 int				ft_firstoccurrence(char *str, char c);
+
+// New Functions
+int     ft_atoi_base(const char *str, int base);
 
 #endif

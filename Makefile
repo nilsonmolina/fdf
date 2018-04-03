@@ -1,7 +1,7 @@
 NAME = fdf
 
 # file names
-SRC = main.c 
+SRC = main.c events.c render.c
 OBJ = $(SRC:.c=.o)
 
 # directories

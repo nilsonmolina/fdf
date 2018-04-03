@@ -7,8 +7,8 @@
 # include <math.h>
 
 // VARIABLES
-# define WINDOW_WIDTH	400 //1280
-# define WINDOW_HEIGHT	400 //720
+# define WINDOW_WIDTH	400//1280
+# define WINDOW_HEIGHT	400//720
 
 // STRUCTS
 typedef struct		s_img
@@ -40,8 +40,7 @@ typedef struct		s_mlx
 
 // FUNCTIONS 
 // main.c
-void	fdf(char *filename);
-void	init_mlx(t_mlx *mlx);
+void	init(t_mlx *mlx);
 
 // events.c
 int		key_pressed(int keycode, t_mlx *mlx);
@@ -54,7 +53,6 @@ void	put_img_pixel(t_img *img, int x, int y, int color);
 void	put_img_vector(t_img *img, t_vector vector);
 
 // scanner.c
-
 
 
 #endif
