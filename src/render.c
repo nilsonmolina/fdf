@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
+/*   Updated: 2018/04/08 16:17:28 by nmolina          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 // remove this before turning in
@@ -12,10 +24,10 @@ void 	    put_pixel_square(t_mlx *mlx)
 	mlx_clear_window(mlx->mlx, mlx->window);	
 	
 	y = 50;
-	while (y < 150)
+	while (y < 250)
 	{
 		x = 50;
-		while (x < 150)
+		while (x < 250)
 		{
 			mlx_pixel_put(mlx->mlx, mlx->window, x, y, 0xFF0000);
 			x++;
@@ -27,22 +39,23 @@ void 	    put_pixel_square(t_mlx *mlx)
 
 void	    put_image_square(t_mlx *mlx)
 {
-	int x = 0;
-	int y = 0;
+	int x;
+	int y;
 
 	mlx_clear_window(mlx->mlx, mlx->window);
 
-	while (y < 100) 
+	y = 50;
+	while (y < 250) 
 	{
-		while (x < 100)
+		x = 50;
+		while (x < 250)
 		{
 			put_img_pixel(&mlx->img, x, y, 0xFFFFFF);
 			x++;
 		}
 		y++;
-		x = 0;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img.img, 50, 50);
+	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img.img, 0, 0);
 	mlx_string_put(mlx->mlx, mlx->window, 10, 10, 0xFFFFFF, "put_image");
 }
 

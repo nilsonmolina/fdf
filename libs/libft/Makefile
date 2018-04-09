@@ -1,32 +1,37 @@
-SRCDIR = src
-OBJDIR = obj
+NAME = libft.a
 
-SRC = ft_*.c 
-OBJ = $(SRC:.c=.o)
+# directories
+OBJDIR := objs
+SRCDIR := src
 
-SRCS = $(addprefix $(SRCDIR)/, $(SRC))
-OBJS = $(addprefix $(OBJDIR)/, $(OBJ))
-HEADER = -I includes
+# files with their paths
+SRCS := $(wildcard $(SRCDIR)/*.c)
+OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
+# compiler
 CC = gcc
 CFLAGS = -c -Wall -Wextra -Werror
-NAME = libft.a
+HEADERS = -I ./includes
 
 # prevents name collision with files in the directory.
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME):
-	@$(CC) $(CFLAGS) $(HEADER) $(SRCS)
-	@/bin/mkdir -p $(OBJDIR)
-	@mv $(OBJ) $(OBJDIR)/
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS) $(HEADERS) $< -o $@
+
+$(NAME): $(OBJS)
 	@ar src $(NAME) $(OBJS)
+	@echo "- $(NAME) built and ready"
 
 clean:
 	@/bin/rm -rf $(OBJDIR)
+	@echo "- $(NAME) cleaned"
 
 fclean: clean
 	@/bin/rm -f $(NAME)
+	@echo "- $(NAME) fcleaned"
 
 re: fclean all

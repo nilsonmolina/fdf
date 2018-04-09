@@ -7,8 +7,8 @@
 # include <math.h>
 
 // VARIABLES
-# define WINDOW_WIDTH	400 //1280
-# define WINDOW_HEIGHT	400 //720
+# define WINDOW_WIDTH	1280
+# define WINDOW_HEIGHT	720
 
 // STRUCTS
 typedef struct		s_img

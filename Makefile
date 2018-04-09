@@ -32,20 +32,20 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) $(HEADERS) $< -o $@
 
 $(NAME): $(OBJS)
-	@make -C $(MLXDIR)
-	@make -C $(LIBDIR)
+	make -C $(MLXDIR)
+	make -C $(LIBDIR)
 	@$(CC) $(OBJS) $(LIBS) -o $@
-	@echo "- $(NAME) built and ready"
+	@echo "---- $(NAME) built and ready ----"
 
 clean:
 	@/bin/rm -rf $(OBJDIR)
 	@make -C $(MLXDIR) clean
 	@make -C $(LIBDIR) clean
-	@echo "- $(NAME) cleaned"
+	@echo "---- $(NAME) cleaned ----"
 
 fclean: clean
 	@/bin/rm -f $(NAME)
 	@make -C $(LIBDIR) fclean
-	@echo "- $(NAME) fcleaned"
+	@echo "---- $(NAME) fcleaned ----"
 
 re: fclean all

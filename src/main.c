@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/02 19:07:33 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/02 23:17:56 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int		main(int argc, char **argv)
 {
-	if (argc == 2)
-		fdf(argv[1]);
+	if (argc == 1 || ft_strcmp(argv[1], "hello"))
+		fdf("test");
+	else
+		write(1, "error", 5);
+	
 	return (0);
 }
 
@@ -24,8 +27,6 @@ void	fdf(char *filename)
 	t_mlx mlx;
 
 	init_mlx(&mlx);
-
-
 
 	mlx_string_put(mlx.mlx, mlx.window, 10, 10, 0xFFFFFF, filename);
 	mlx_string_put(mlx.mlx, mlx.window, 10, 30, 0xAAAAAA, "'1' - put_pixel");
