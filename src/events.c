@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/08 16:17:40 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/09 17:07:35 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int		key_pressed(int keycode, t_mlx *mlx)
 		put_pixel_square(mlx);
 	else if (keycode == 19)
 		put_image_square(mlx);
+	else if (keycode == 20)
+		set_map(mlx);
 	else
 		ft_putstr("accepted buttons: 'space' or 'esc' keys.\n");
 
