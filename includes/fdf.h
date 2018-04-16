@@ -13,7 +13,7 @@
 /* ------ VARIABLES ------ */
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
-# define BUF_SIZE 		2047000
+# define BUF_SIZE 		500000
 
 /* ------ STRUCTS ------ */
 typedef struct	s_img
