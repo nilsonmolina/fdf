@@ -6,56 +6,64 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/09 17:23:00 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/16 12:14:17 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <fcntl.h>
 
-// remove this before turning in
-#include <stdio.h>
-//
+/* private functions */
+void    scan_file(t_canvas *c);
+void    set_sizes(t_canvas *c);
+void    clearFile(t_canvas *c);
+char	*ft_empty_str(void);
 
-void    set_map(t_mlx *mlx)
+void    set_map(t_canvas *c)
+{    
+    scan_file(c);
+    set_sizes(c);
+    printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);
+}
+
+void    scan_file(t_canvas *c)
 {
-    int     fd;
-    char    *line;
-	char	**row;
-
-    if ((fd = open(mlx->map.filename, O_RDONLY)) < 1)
-        exit(0);
-    while (get_next_line(fd, &line) == 1)
+    if (c->file.contents != NULL)
+        free(c->file.contents);
+    c->file.contents = ft_memalloc(1);
+    // c->file.contents = ft_empty_str();
+    ft_error_msg((c->file.fd = open(c->filename, O_RDONLY)), "Failed to open file.");
+    while ((c->file.ret = read(c->file.fd, &c->file.buffer, BUF_SIZE)))
     {
-		row = ft_strsplit(line, ' ');
-		while ( *row ) printf( "%s", *row++ );
-		printf("%s", "\n");
-		free(line);
-		// free(row);
+        c->file.buffer[c->file.ret] = '\0';
+        c->file.temp = c->file.contents;
+        c->file.contents = ft_strjoin(c->file.temp, c->file.buffer);
+        free(c->file.temp);
     }
 }
 
-/*
-
-int		main(int argc, char **argv)
+void    set_sizes(t_canvas *c)
 {
-	int		fd;
-	char	*line;
+    int i;
 
-	if (argc == 1)
-		fd = -1;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	while (get_next_line(fd, &line) == 1 )
-	{
-		ft_putendl(line);
-		free(line);
-	}
-	if (argc == 2)
-		close(fd);
-	return (0);
+    c->file.splitY = ft_strsplit(c->file.contents, '\n');
+    c->file.splitX = ft_strsplit(c->file.splitY[0], ' ');
+    i = 0;    
+    while (c->file.splitX[i])
+        i++;
+    c->map.columns = i;
+    i = 0;
+    while (c->file.splitY[i])
+        i++;
+    c->map.rows = i;
+}
 
+// char	*ft_empty_str(void)
+// {
+// 	char *str;
 
-*/
+// 	str = (char *)malloc(sizeof(char));
+// 	if (!str)
+// 		return (NULL);
+// 	str[0] = '\0';
+// 	return (str);
+// }

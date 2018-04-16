@@ -6,13 +6,11 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/16 11:02:01 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/10 00:40:17 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	fdf(char *filename);
 
 int		main(int argc, char **argv)
 {
@@ -26,24 +24,20 @@ int		main(int argc, char **argv)
 void	fdf(char *filename)
 {
 	t_canvas c;
-
+	
 	c.mlx = mlx_init();
 	c.window = mlx_new_window(c.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "nmolina fdf");
 	c.img.img = mlx_new_image(c.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	c.img.data = (int *)mlx_get_data_addr(c.img.img, &c.img.bpp, &c.img.sl, &c.img.e);
 	c.img.width = WINDOW_WIDTH;
 	c.filename = filename;
-	c.file.contents = NULL;
-	c.file.temp = NULL;
-	c.file.splitX = NULL;
-	c.file.splitY = NULL;
 
 	mlx_string_put(c.mlx, c.window, 10, 10, 0xFFFFFF, c.filename);
 	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1' - put_pixel");
 	mlx_string_put(c.mlx, c.window, 10, 50, 0xAAAAAA, "'2' - put_image");
-
-	set_map(&c);
-
+	mlx_string_put(c.mlx, c.window, 10, 70, 0xAAAAAA, "'3' - benchmark_read_gnl");
+	mlx_string_put(c.mlx, c.window, 10, 90, 0xAAAAAA, "'4' - benchmark_read_buf");
+	
 	mlx_key_hook(c.window, key_pressed, &c);
 	mlx_mouse_hook(c.window, mouse_clicked, &c);
 	mlx_loop(c.mlx);

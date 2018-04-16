@@ -16,7 +16,6 @@ OBJS = $(addprefix $(OBJDIR)/, $(OBJ))
 
 # compiler
 CC = gcc
-# CFLAGS = -c -g -Wall -Werror -Wextra
 CFLAGS = -c -Wall -Werror -Wextra
 LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
 HEADERS = -I includes -I $(LIBDIR)/includes -I $(MLXDIR)

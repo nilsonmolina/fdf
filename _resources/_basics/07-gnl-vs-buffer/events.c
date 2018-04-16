@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/16 10:55:48 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/09 22:30:17 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 struct timeval stop, start;
 //
 
-int		key_pressed(int keycode, t_canvas *c)
+int		key_pressed(int keycode, t_canvas *canvas)
 {
 	printf("key code: %d\n", keycode);
 	// timing function speed.
@@ -27,9 +27,13 @@ int		key_pressed(int keycode, t_canvas *c)
 	if (keycode == 53)
 		exit(0);
 	else if (keycode == 18)
-		put_pixel_square(c);
+		put_pixel_square(canvas);
 	else if (keycode == 19)
-		put_image_square(c);
+		put_image_square(canvas);
+	else if (keycode == 20)
+		set_map(canvas);
+	else if (keycode == 21)
+		set_map2(canvas);
 	else
 		ft_putstr("accepted buttons: 'space' or 'esc' keys.\n");
 
@@ -40,10 +44,10 @@ int		key_pressed(int keycode, t_canvas *c)
 	return (0);
 }
 
-int		mouse_clicked(int button, int x, int y, t_canvas *c)
+int		mouse_clicked(int button, int x, int y, t_canvas *canvas)
 {
 	printf("button code: %d\t- coordinate (x: %d, y: %d)\n", button, x, y);
 	if ((x >= 50 && x <= 150) && (y >= 50 && y <= 150))
-		mlx_clear_window(c->mlx, c->window);
+		mlx_clear_window(canvas->mlx, canvas->window);
 	return (0);
 }
