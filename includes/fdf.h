@@ -16,16 +16,6 @@
 # define BUF_SIZE 		500000
 
 /* ------ STRUCTS ------ */
-typedef struct	s_img
-{
-	int			bpp;
-	int			sl;
-	int			e;
-	void		*img;
-	int			*data;
-	int			width;
-}					t_img;
-
 typedef struct	s_vector
 {
 	int			x;
@@ -39,7 +29,27 @@ typedef struct	s_map
 	t_vector	*vectors;
 	int			rows;
 	int			columns;
+	int			color;
 }				t_map;
+
+typedef struct	s_img
+{
+	int			bpp;
+	int			sl;
+	int			e;
+	void		*img;
+	int			*data;
+	int			width;
+}					t_img;
+
+typedef struct	s_canvas
+{
+	void		*mlx;
+	void		*window;
+	char		*filename;
+	t_img		img;
+	t_map		map;
+}				t_canvas;
 
 typedef struct	s_file
 {
@@ -52,27 +62,18 @@ typedef struct	s_file
 	int			ret;
 }				t_file;
 
-typedef struct	s_canvas
-{
-	void		*mlx;
-	void		*window;
-	char		*filename;
-	t_img		img;
-	t_map		map;
-	t_file		file;
-}				t_canvas;
-
 typedef struct	s_iterator
 {
 	int			i;
 	int			x;
 	int			y;
+	int			z;
 }				t_iterator;
 
 /* ------ PUBLIC FUNCTIONS ------ */
 /* main.c */
-void	ft_usage();
-void	ft_error_msg(int error, char *message);
+void	usage();
+void	check_error(int err, char *msg);
 
 /* events.c */
 int		key_pressed(int keycode, t_canvas *c);

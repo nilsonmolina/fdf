@@ -6,23 +6,15 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/16 10:55:48 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 12:07:44 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// remove this before turning in
-#include <stdio.h>
-#include <sys/time.h>
-struct timeval stop, start;
-//
-
 int		key_pressed(int keycode, t_canvas *c)
 {
 	printf("key code: %d\n", keycode);
-	// timing function speed.
-	gettimeofday(&start, NULL);
 
 	if (keycode == 53)
 		exit(0);
@@ -32,10 +24,6 @@ int		key_pressed(int keycode, t_canvas *c)
 		put_image_square(c);
 	else
 		ft_putstr("accepted buttons: 'space' or 'esc' keys.\n");
-
-	// timing function speed.
-	gettimeofday(&stop, NULL);
-	printf("took %d\n", stop.tv_usec - start.tv_usec);
 	
 	return (0);
 }

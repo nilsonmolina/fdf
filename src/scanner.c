@@ -6,55 +6,103 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/16 16:05:53 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 14:40:32 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /* private functions */
-void    copy_file(t_canvas *c);
-void    set_sizes(t_canvas *c);
-void    clearFile(t_canvas *c);
-char	*ft_empty_str(void);
+void    copy_file(t_canvas *c, t_file *file);
+void    create_map(t_canvas *c, t_file *file);
+void    free_file(t_file *file);
 
 void    set_map(t_canvas *c)
-{    
-    copy_file(c);
-    // set_sizes(c);
+{
+    t_file  file;
+
+    copy_file(c, &file);
+    create_map(c, &file);
+    free_file(&file);
     printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);
 }
 
-void    copy_file(t_canvas *c)
+void    copy_file(t_canvas *c, t_file *file)
 {
-    if (c->file.contents != NULL)
-        free(c->file.contents);
-    c->file.contents = ft_memalloc(1);
-    ft_error_msg((c->file.fd = open(c->filename, O_RDONLY)), "Failed to open file.");
-    while ((c->file.ret = read(c->file.fd, &c->file.buffer, BUF_SIZE)))
+    int i;
+    
+    file->contents = ft_memalloc(1);
+    check_error((file->fd = open(c->filename, O_RDONLY)), "Failed to open file.");
+    while ((file->ret = read(file->fd, &file->buffer, BUF_SIZE)))
     {
-        c->file.buffer[c->file.ret] = '\0';
-        c->file.temp = c->file.contents;
-        c->file.contents = ft_strjoin(c->file.temp, c->file.buffer);
-        free(c->file.temp);
+        file->buffer[file->ret] = '\0';
+        file->temp = file->contents;
+        file->contents = ft_strjoin(file->temp, file->buffer);
+        free(file->temp);
     }
+    file->splitY = ft_strsplit(file->contents, '\n');
+    file->splitX = ft_strsplit(file->splitY[0], ' ');
+    i = 0;
+    while (file->splitX[i])
+        free(file->splitX[i++]);
+    c->map.columns = i;
+    i = 0;
+    while (file->splitY[i])
+        i++;
+    c->map.rows = i;
+    free(file->contents);
+    free(file->splitX);
 }
 
-void    set_sizes(t_canvas *c)
+void    create_map(t_canvas *c, t_file *file)
+{
+    t_iterator  iter;
+    t_vector v[c->map.rows * c->map.columns];
+
+    iter.i = 0;
+    iter.y = 0;    
+    while (file->splitY[iter.y])
+    {
+        iter.x = 0;
+        file->splitX = ft_strsplit(file->splitY[iter.y], ' ');
+        while (file->splitX[iter.x])
+        {
+            if (iter.x >= c->map.columns)
+                break ;
+            // val = ft_strsplit(file->splitX[iter.x], ',');
+            v[iter.i].x = iter.x;
+            v[iter.i].y = iter.y;
+            v[iter.i].z = ft_atoi_base(file->splitX[iter.x], 10);
+            v[iter.i].color = c->map.color;
+            
+            // if (val[1])
+            //     c->map.vectors[iter.i].color = ft_atoi_base(val[1], 16);
+            // else
+            //     c->map.vectors[iter.i].color = c->map.color;
+            free(file->splitX[iter.x++]);
+            iter.i++;
+        }
+        free(file->splitX);
+        iter.y++;
+    }
+    c->map.vectors = v;    
+}
+
+void    free_file(t_file *file)
 {
     int i;
 
-    c->file.splitY = ft_strsplit(c->file.contents, '\n');
-    c->file.splitX = ft_strsplit(c->file.splitY[0], ' ');
-    i = 0;    
-    while (c->file.splitX[i])
-        i++;
-    c->map.columns = i;
+    // i = 0;
+    // while (file->splitX[i])
+    //     free(file->splitX[i++]);
     i = 0;
-    while (c->file.splitY[i])
-        i++;
-    c->map.rows = i;
+    while (file->splitY[i])
+        free(file->splitY[i++]);
+    // free(file->contents);
+    // free(file->splitX);
+    free(file->splitY);
 }
+
 
 
 
@@ -71,4 +119,37 @@ void    set_sizes(t_canvas *c)
 // 	ft_strcpy(buff, s1);
 // 	ft_strcat(buff, s2);
 // 	return (buff);
+// }
+
+
+// void    create_map(t_canvas *c, t_file *file)
+// {
+//     char        **val;
+//     t_iterator  iter;
+
+//     c->map.vectors = malloc(sizeof(t_vector *) * (c->map.rows));
+//     while (iter.y < c->map.rows)
+//     {
+//         iter.x = 0;
+//         file->splitX = ft_strsplit(file->splitY[iter.y], ' ');
+//         c->map.vectors[iter.y] = malloc(sizeof(t_vector *) * (c->map.columns));
+//         while (iter.x < c->map.columns)
+//         {
+//             val = ft_strsplit(file->splitX[iter.x], ',');
+//             c->map.vectors[iter.y][iter.x].x = iter.x;
+//             c->map.vectors[iter.y][iter.x].y = iter.y;
+//             c->map.vectors[iter.y][iter.x].z = ft_atoi_base(val[0], 10);
+//             if (val[1])
+//                 c->map.vectors[iter.y][iter.x].color = ft_atoi_base(val[1], 16);
+//             else
+//                 c->map.vectors[iter.y][iter.x].color = c->map.color;
+//             // iter.i = 0;
+//             // while (val[iter.i])
+//             //     free(val[iter.i++]);
+//             // free(val);
+//             free(file->splitX[iter.x++]);
+//         }
+//         free(file->splitX);
+//         iter.y++;
+//     }
 // }

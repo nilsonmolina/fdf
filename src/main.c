@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/16 15:31:16 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 13:57:50 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	fdf(char *filename);
 int		main(int argc, char **argv)
 {
 	if (argc != 2)
-		ft_usage();
+		usage();
 	else
 		fdf(argv[1]);
 	return (0);
@@ -33,10 +33,7 @@ void	fdf(char *filename)
 	c.img.data = (int *)mlx_get_data_addr(c.img.img, &c.img.bpp, &c.img.sl, &c.img.e);
 	c.img.width = WINDOW_WIDTH;
 	c.filename = filename;
-	c.file.contents = NULL;
-	c.file.temp = NULL;
-	c.file.splitX = NULL;
-	c.file.splitY = NULL;
+	c.map.color = 0xFFFFFF;
 
 	mlx_string_put(c.mlx, c.window, 10, 10, 0xFFFFFF, c.filename);
 	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1' - put_pixel");
@@ -49,13 +46,13 @@ void	fdf(char *filename)
 	mlx_loop(c.mlx);
 }
 
-void	ft_usage()
+void	usage()
 {
 	ft_putstr("usage: ./fdf <MAP_FILE>\n");
 	exit(0);
 }
 
-void	ft_error_msg(int err, char *msg)
+void	check_error(int err, char *msg)
 {
 	if (err < 1)
 	{
