@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 23:09:48 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/18 15:42:10 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	fdf(char *filename)
 	c.map.color = 0xFFFFFF;
 
 	mlx_string_put(c.mlx, c.window, 10, 10, 0xFFFFFF, c.filename);
-	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1' - put_pixel");
-	mlx_string_put(c.mlx, c.window, 10, 50, 0xAAAAAA, "'2' - put_image");
-	mlx_string_put(c.mlx, c.window, 10, 70, 0xAAAAAA, "'3' - render_map");
-	mlx_string_put(c.mlx, c.window, 10, 90, 0xAAAAAA, "'4' - print_map_array");
+	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1'     - render_map");
+	mlx_string_put(c.mlx, c.window, 10, 50, 0xAAAAAA, "'2'     - print_map_array");
+	mlx_string_put(c.mlx, c.window, 10, 70, 0xAAAAAA, "'space' - clear_map");
+	mlx_string_put(c.mlx, c.window, 10, 90, 0xAAAAAA, "'esc'   - quit");
 
 	set_map(&c);
 

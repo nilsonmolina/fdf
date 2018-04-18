@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 23:08:53 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/18 15:40:25 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,14 @@ int		key_pressed(int keycode, t_canvas *c)
 
 	if (keycode == 53)
 		exit(0);
+	else if (keycode == 49)
+		clear_image(c);
 	else if (keycode == 18)
-		put_pixel_square(c);
-	else if (keycode == 19)
-		put_image_square(c);
-	else if (keycode == 20)
 		put_image_map(c);
-	else if (keycode == 21)
+	else if (keycode == 19)
 		print_map(c);
-		
 	else
 		ft_putstr("accepted buttons: 'space' or 'esc' keys.\n");
-	
 	return (0);
 }
 

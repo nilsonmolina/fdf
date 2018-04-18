@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 23:07:56 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/18 16:58:29 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void    set_map(t_canvas *c)
 
     read_file(c, &file);
     create_map(c, &file);
-    printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);
-    // print_map(c);
 }
 
 void    read_file(t_canvas *c, t_file *file)
@@ -57,9 +55,7 @@ void    read_file(t_canvas *c, t_file *file)
 void    create_map(t_canvas *c, t_file *file)
 {
     t_iterator  iter;
-    // t_vector    v[c->map.rows * c->map.columns];
 
-    // c->map.vectors = v;
     c->map.vectors = malloc(sizeof(t_vector) * (c->map.rows * c->map.columns));
     iter.i = 0;
     iter.y = 0;
@@ -96,48 +92,12 @@ void    set_vector(t_canvas *c, t_iterator *iter, t_file *file)
     else
         c->map.vectors[iter->i].color = c->map.color;
     free_array((void **)val);
-    // printf("x: %2d | y: %2d | z: %2d | color: %d\n", c->map.vectors[iter->i].x, c->map.vectors[iter->i].y, c->map.vectors[iter->i].z, c->map.vectors[iter->i].color);
-
-
 }
 
-void    print_map(t_canvas *c)
+void    print_map(t_canvas *c) // remove this before turning in
 {
     int i = -1;
+    printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);    
     while (++i < (c->map.rows * c->map.columns))
-        printf("x: %2d | y: %2d | color: %d\n", c->map.vectors[i].x, c->map.vectors[i].y, c->map.vectors[i].color);
+        printf("y: %2d | x: %2d | z: %2d | color: %d\n", c->map.vectors[i].y, c->map.vectors[i].x, c->map.vectors[i].z, c->map.vectors[i].color);
 }
-
-/*
-void    create_map(t_canvas *c, t_file *file)
-{
-    char        **val;
-    t_iterator  iter;
-
-    c->map.vectors = malloc(sizeof(t_vector *) * (c->map.rows));
-    while (iter.y < c->map.rows)
-    {
-        iter.x = 0;
-        file->splitX = ft_strsplit(file->splitY[iter.y], ' ');
-        c->map.vectors[iter.y] = malloc(sizeof(t_vector *) * (c->map.columns));
-        while (iter.x < c->map.columns)
-        {
-            val = ft_strsplit(file->splitX[iter.x], ',');
-            c->map.vectors[iter.y][iter.x].x = iter.x;
-            c->map.vectors[iter.y][iter.x].y = iter.y;
-            c->map.vectors[iter.y][iter.x].z = ft_atoi_base(val[0], 10);
-            if (val[1])
-                c->map.vectors[iter.y][iter.x].color = ft_atoi_base(val[1], 16);
-            else
-                c->map.vectors[iter.y][iter.x].color = c->map.color;
-            // iter.i = 0;
-            // while (val[iter.i])
-            //     free(val[iter.i++]);
-            // free(val);
-            free(file->splitX[iter.x++]);
-        }
-        free(file->splitX);
-        iter.y++;
-    }
-}
-*/
