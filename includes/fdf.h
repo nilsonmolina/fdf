@@ -74,6 +74,7 @@ typedef struct	s_iterator
 /* main.c */
 void	usage();
 void	check_error(int err, char *msg);
+void	free_array(void **arr);
 
 /* events.c */
 int		key_pressed(int keycode, t_canvas *c);
@@ -82,10 +83,12 @@ int		mouse_clicked(int button, int x, int y, t_canvas *c);
 /* render.c */
 void 	put_pixel_square(t_canvas *c);
 void	put_image_square(t_canvas *c);
+void	put_image_map(t_canvas *c);
 void	put_img_pixel(t_img *img, int x, int y, int color);
 void	put_img_vector(t_img *img, t_vector vector);
 
 /* scanner.c */
 void    set_map(t_canvas *c);
+void    print_map(t_canvas *c);
 
 #endif

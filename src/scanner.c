@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 14:40:32 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 17:19:05 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /* private functions */
-void    copy_file(t_canvas *c, t_file *file);
+void    read_file(t_canvas *c, t_file *file);
 void    create_map(t_canvas *c, t_file *file);
-void    free_file(t_file *file);
+void    set_vector(t_canvas *c, t_iterator *iter, t_file *file);
 
 void    set_map(t_canvas *c)
 {
     t_file  file;
 
-    copy_file(c, &file);
+    read_file(c, &file);
     create_map(c, &file);
-    free_file(&file);
     printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);
+    print_map(c);
 }
 
-void    copy_file(t_canvas *c, t_file *file)
+void    read_file(t_canvas *c, t_file *file)
 {
     int i;
     
@@ -57,10 +57,11 @@ void    copy_file(t_canvas *c, t_file *file)
 void    create_map(t_canvas *c, t_file *file)
 {
     t_iterator  iter;
-    t_vector v[c->map.rows * c->map.columns];
+    t_vector    v[c->map.rows * c->map.columns];
 
+    c->map.vectors = v;
     iter.i = 0;
-    iter.y = 0;    
+    iter.y = 0;
     while (file->splitY[iter.y])
     {
         iter.x = 0;
@@ -69,87 +70,71 @@ void    create_map(t_canvas *c, t_file *file)
         {
             if (iter.x >= c->map.columns)
                 break ;
-            // val = ft_strsplit(file->splitX[iter.x], ',');
-            v[iter.i].x = iter.x;
-            v[iter.i].y = iter.y;
-            v[iter.i].z = ft_atoi_base(file->splitX[iter.x], 10);
-            v[iter.i].color = c->map.color;
-            
-            // if (val[1])
-            //     c->map.vectors[iter.i].color = ft_atoi_base(val[1], 16);
-            // else
-            //     c->map.vectors[iter.i].color = c->map.color;
+            set_vector(c, &iter, file);
             free(file->splitX[iter.x++]);
             iter.i++;
+        }
+        if (iter.x < c->map.columns)
+            check_error(0, "map error - improper row sizes");
+        free(file->splitX);
+        iter.y++;
+    }
+    free_array((void **)file->splitY);
+}
+
+void    set_vector(t_canvas *c, t_iterator *iter, t_file *file)
+{
+    char    **val;
+
+    val = ft_strsplit(file->splitX[iter->x], ',');
+    c->map.vectors[iter->i].x = iter->x;
+    c->map.vectors[iter->i].y = iter->y;
+    c->map.vectors[iter->i].z = ft_atoi_base(file->splitX[iter->x], 10);
+    if (val[1])
+        c->map.vectors[iter->i].color = ft_atoi_base(val[1]+2, 16);
+    else
+        c->map.vectors[iter->i].color = c->map.color;
+    free_array((void **)val);
+    printf("x: %2d | y: %2d | z: %2d | color: %d\n", c->map.vectors[iter->i].x, c->map.vectors[iter->i].y, c->map.vectors[iter->i].z, c->map.vectors[iter->i].color);
+}
+
+void    print_map(t_canvas *c)
+{
+    int i = -1;
+    while (++i < (c->map.rows * c->map.columns))
+        printf("x: %2d | y: %2d | color: %d\n", c->map.vectors[i].x, c->map.vectors[i].y, c->map.vectors[i].color);
+}
+
+/*
+void    create_map(t_canvas *c, t_file *file)
+{
+    char        **val;
+    t_iterator  iter;
+
+    c->map.vectors = malloc(sizeof(t_vector *) * (c->map.rows));
+    while (iter.y < c->map.rows)
+    {
+        iter.x = 0;
+        file->splitX = ft_strsplit(file->splitY[iter.y], ' ');
+        c->map.vectors[iter.y] = malloc(sizeof(t_vector *) * (c->map.columns));
+        while (iter.x < c->map.columns)
+        {
+            val = ft_strsplit(file->splitX[iter.x], ',');
+            c->map.vectors[iter.y][iter.x].x = iter.x;
+            c->map.vectors[iter.y][iter.x].y = iter.y;
+            c->map.vectors[iter.y][iter.x].z = ft_atoi_base(val[0], 10);
+            if (val[1])
+                c->map.vectors[iter.y][iter.x].color = ft_atoi_base(val[1], 16);
+            else
+                c->map.vectors[iter.y][iter.x].color = c->map.color;
+            // iter.i = 0;
+            // while (val[iter.i])
+            //     free(val[iter.i++]);
+            // free(val);
+            free(file->splitX[iter.x++]);
         }
         free(file->splitX);
         iter.y++;
     }
-    c->map.vectors = v;    
 }
-
-void    free_file(t_file *file)
-{
-    int i;
-
-    // i = 0;
-    // while (file->splitX[i])
-    //     free(file->splitX[i++]);
-    i = 0;
-    while (file->splitY[i])
-        free(file->splitY[i++]);
-    // free(file->contents);
-    // free(file->splitX);
-    free(file->splitY);
-}
-
-
-
-
-// char	*ft_strjoin(char const *s1, char const *s2)
-// {
-// 	char	*buff;
-
-// 	if (!s1)
-// 		return (char *)s2;
-// 	if (!s2)
-// 		return (char *)s1;
-// 	if ((buff = malloc(ft_strlen(s1) + ft_strlen(s2) + 1)) == NULL)
-// 		return (NULL);
-// 	ft_strcpy(buff, s1);
-// 	ft_strcat(buff, s2);
-// 	return (buff);
-// }
-
-
-// void    create_map(t_canvas *c, t_file *file)
-// {
-//     char        **val;
-//     t_iterator  iter;
-
-//     c->map.vectors = malloc(sizeof(t_vector *) * (c->map.rows));
-//     while (iter.y < c->map.rows)
-//     {
-//         iter.x = 0;
-//         file->splitX = ft_strsplit(file->splitY[iter.y], ' ');
-//         c->map.vectors[iter.y] = malloc(sizeof(t_vector *) * (c->map.columns));
-//         while (iter.x < c->map.columns)
-//         {
-//             val = ft_strsplit(file->splitX[iter.x], ',');
-//             c->map.vectors[iter.y][iter.x].x = iter.x;
-//             c->map.vectors[iter.y][iter.x].y = iter.y;
-//             c->map.vectors[iter.y][iter.x].z = ft_atoi_base(val[0], 10);
-//             if (val[1])
-//                 c->map.vectors[iter.y][iter.x].color = ft_atoi_base(val[1], 16);
-//             else
-//                 c->map.vectors[iter.y][iter.x].color = c->map.color;
-//             // iter.i = 0;
-//             // while (val[iter.i])
-//             //     free(val[iter.i++]);
-//             // free(val);
-//             free(file->splitX[iter.x++]);
-//         }
-//         free(file->splitX);
-//         iter.y++;
-//     }
-// }
+*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 13:57:50 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 17:18:11 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	fdf(char *filename)
 	mlx_string_put(c.mlx, c.window, 10, 10, 0xFFFFFF, c.filename);
 	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1' - put_pixel");
 	mlx_string_put(c.mlx, c.window, 10, 50, 0xAAAAAA, "'2' - put_image");
+	mlx_string_put(c.mlx, c.window, 10, 70, 0xAAAAAA, "'3' - render_map");
+	mlx_string_put(c.mlx, c.window, 10, 70, 0xAAAAAA, "'4' - print_map_array");
 
 	set_map(&c);
 
@@ -61,6 +63,16 @@ void	check_error(int err, char *msg)
 		ft_putstr("\n");
 		exit(1);
 	}
+}
+
+void	free_array(void **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }
 
 // void	ft_check_args(t_canvas *c, int argc, char **argv)
