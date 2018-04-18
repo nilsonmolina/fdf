@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 17:19:05 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 23:07:56 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    set_map(t_canvas *c)
     read_file(c, &file);
     create_map(c, &file);
     printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);
-    print_map(c);
+    // print_map(c);
 }
 
 void    read_file(t_canvas *c, t_file *file)
@@ -57,9 +57,10 @@ void    read_file(t_canvas *c, t_file *file)
 void    create_map(t_canvas *c, t_file *file)
 {
     t_iterator  iter;
-    t_vector    v[c->map.rows * c->map.columns];
+    // t_vector    v[c->map.rows * c->map.columns];
 
-    c->map.vectors = v;
+    // c->map.vectors = v;
+    c->map.vectors = malloc(sizeof(t_vector) * (c->map.rows * c->map.columns));
     iter.i = 0;
     iter.y = 0;
     while (file->splitY[iter.y])
@@ -95,7 +96,9 @@ void    set_vector(t_canvas *c, t_iterator *iter, t_file *file)
     else
         c->map.vectors[iter->i].color = c->map.color;
     free_array((void **)val);
-    printf("x: %2d | y: %2d | z: %2d | color: %d\n", c->map.vectors[iter->i].x, c->map.vectors[iter->i].y, c->map.vectors[iter->i].z, c->map.vectors[iter->i].color);
+    // printf("x: %2d | y: %2d | z: %2d | color: %d\n", c->map.vectors[iter->i].x, c->map.vectors[iter->i].y, c->map.vectors[iter->i].z, c->map.vectors[iter->i].color);
+
+
 }
 
 void    print_map(t_canvas *c)

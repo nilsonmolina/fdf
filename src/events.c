@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 17:17:53 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 23:08:53 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		key_pressed(int keycode, t_canvas *c)
 		put_image_square(c);
 	else if (keycode == 20)
 		put_image_map(c);
-	else if (keycode == 20)
+	else if (keycode == 21)
 		print_map(c);
 		
 	else

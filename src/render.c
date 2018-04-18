@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/17 17:17:38 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/17 23:31:36 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,12 @@ void		put_image_map(t_canvas *c)
 	c->img.img = mlx_new_image(c->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	i = 0;
 	while (i < (c->map.rows * c->map.columns))
-	{
-		put_img_vector(&c->img, c->map.vectors[i]);
-		printf("x: %2d | y: %2d | color: %d\n", c->map.vectors[i].x, c->map.vectors[i].y, c->map.vectors[i].color);
-		i++;
-	}
+		put_img_vector(&c->img, c->map.vectors[i++]);
 	mlx_put_image_to_window(c->mlx, c->window, c->img.img, 0, 0);
 	mlx_string_put(c->mlx, c->window, 10, 10, 0xFFFFFF, "render_map");
 }
 
-void	put_img_pixel(t_img *img, int x, int y, int color)
+void		put_img_pixel(t_img *img, int x, int y, int color)
 {
 	int i;
 
@@ -84,6 +80,9 @@ void		put_img_vector(t_img *img, t_vector vector)
 {
 	int i;
 
-	i = (vector.x + 50) + ((vector.y + 50) * img->width);
+	i = (vector.x) + ((vector.y) * img->width);
+	i *= 1;
+	if (i > (WINDOW_HEIGHT * WINDOW_WIDTH))
+		return ; // check_error(0, "You f*cked up!");
 	img->data[i] = vector.color;
 }
