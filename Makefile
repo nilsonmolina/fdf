@@ -1,7 +1,7 @@
 NAME = fdf
 
 # file names
-SRC = main.c events.c render.c scanner.c
+SRC = main.c events.c render.c scanner.c transform.c mutate.c
 OBJ = $(SRC:.c=.o)
 
 # directories

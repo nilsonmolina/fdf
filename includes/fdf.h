@@ -13,6 +13,8 @@
 /* ------ VARIABLES ------ */
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
+# define OFF_X			100
+# define OFF_Y			100
 # define BUF_SIZE 		500000
 
 /* ------ STRUCTS ------ */
@@ -30,6 +32,13 @@ typedef struct	s_map
 	int			rows;
 	int			columns;
 	int			color;
+	int			scale;
+	int			cntr_x;
+	int			cntr_y;
+	int			rot_x;
+	int			rot_y;
+	int			move_x;
+	int			move_y;
 }				t_map;
 
 typedef struct	s_img
@@ -40,6 +49,7 @@ typedef struct	s_img
 	void		*img;
 	int			*data;
 	int			width;
+	int			height;
 }					t_img;
 
 typedef struct	s_canvas
@@ -81,12 +91,20 @@ int		key_pressed(int keycode, t_canvas *c);
 int		mouse_clicked(int button, int x, int y, t_canvas *c);
 
 /* render.c */
-void	clear_image(t_canvas *c);
-void	put_image_map(t_canvas *c);
-void	put_img_vector(t_img *img, t_vector vector);
+void	clear_img(t_canvas *c);
+void	put_img_map(t_canvas *c);
+void	put_img_vector(t_canvas *c, t_vector vector);
 
 /* scanner.c */
 void    set_map(t_canvas *c);
 void    print_map(t_canvas *c); // remove this before turning in
+
+/* transform.c */
+void	transform(t_map map, t_vector *v);
+void	set_scale(t_canvas *c);
+float	set_theta(int degrees);
+
+/* mutate.c */
+void	rotate_x(t_canvas *c, int degrees);
 
 #endif

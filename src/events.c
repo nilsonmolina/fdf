@@ -3,29 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/18 15:40:25 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/22 19:30:34 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		key_pressed(int keycode, t_canvas *c)
+int		key_pressed(int key, t_canvas *c)
 {
-	printf("key code: %d\n", keycode);
+	printf("key code: %d\n", key);
 
-	if (keycode == 53)
+	if (key == 53)
 		exit(0);
-	else if (keycode == 49)
-		clear_image(c);
-	else if (keycode == 18)
-		put_image_map(c);
-	else if (keycode == 19)
+	else if (key == 49)
+		clear_img(c);
+	else if (key == 18)
+		put_img_map(c);
+	else if (key == 19)
 		print_map(c);
+	else if (key == 13)
+		rotate_x(c, -15);
+	else if (key == 1)
+		rotate_x(c, 15);
+	else if (key == 126)
+		c->map.move_y -= 10;
+	else if (key == 125)
+		c->map.move_y += 10;
+	else if (key == 123)
+		c->map.move_x -= 10;
+	else if (key == 124)
+		c->map.move_x += 10;
 	else
 		ft_putstr("accepted buttons: 'space' or 'esc' keys.\n");
+	if ((123 <= key && key <= 126) || key == 13 || key == 1)
+		put_img_map(c);
 	return (0);
 }
 

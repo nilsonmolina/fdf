@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/18 15:42:10 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/22 19:03:48 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,16 @@ void	fdf(char *filename)
 
 	c.mlx = mlx_init();
 	c.window = mlx_new_window(c.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "nmolina fdf");
-	c.img.img = mlx_new_image(c.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	c.img.img = mlx_new_image(c.mlx, WINDOW_WIDTH - OFF_X, WINDOW_HEIGHT - OFF_Y);
 	c.img.data = (int *)mlx_get_data_addr(c.img.img, &c.img.bpp, &c.img.sl, &c.img.e);
-	c.img.width = WINDOW_WIDTH;
+	c.img.width = WINDOW_WIDTH - OFF_X;
+	c.img.height = WINDOW_HEIGHT - OFF_Y;
 	c.filename = filename;
 	c.map.color = 0xFFFFFF;
+	c.map.rot_x = 0;
+	c.map.rot_y = 0;
+	c.map.move_x = 0;
+	c.map.move_y = 0;
 
 	mlx_string_put(c.mlx, c.window, 10, 10, 0xFFFFFF, c.filename);
 	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1'     - render_map");
