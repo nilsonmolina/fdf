@@ -13,8 +13,10 @@
 /* ------ VARIABLES ------ */
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
-# define OFF_X			100
-# define OFF_Y			100
+# define OFF_X			75
+# define OFF_Y			75
+# define ROT_DEGREES	15
+# define MOVE_PIXELS	50
 # define BUF_SIZE 		500000
 
 /* ------ STRUCTS ------ */
@@ -33,6 +35,7 @@ typedef struct	s_map
 	int			columns;
 	int			color;
 	int			scale;
+	int			z_height;
 	int			cntr_x;
 	int			cntr_y;
 	int			rot_x;
@@ -105,6 +108,8 @@ void	set_scale(t_canvas *c);
 float	set_theta(int degrees);
 
 /* mutate.c */
-void	rotate_x(t_canvas *c, int degrees);
+void	rotate_axis(t_canvas *c, int *axis, int degrees);
+void    adjust_scale(t_canvas *c, int *scale, int direction);
+void    move_map(t_canvas *c, int *axis, int pixels);
 
 #endif

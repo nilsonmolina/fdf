@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/22 19:30:34 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/23 16:35:32 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,31 @@ int		key_pressed(int key, t_canvas *c)
 	else if (key == 19)
 		print_map(c);
 	else if (key == 13)
-		rotate_x(c, -15);
+		rotate_axis(c, &c->map.rot_x, ROT_DEGREES);
 	else if (key == 1)
-		rotate_x(c, 15);
+		rotate_axis(c, &c->map.rot_x, -ROT_DEGREES);
+	else if (key == 0)
+		rotate_axis(c, &c->map.rot_y, -ROT_DEGREES);
+	else if (key == 2)
+		rotate_axis(c, &c->map.rot_y, ROT_DEGREES);
 	else if (key == 126)
-		c->map.move_y -= 10;
+		move_map(c, &c->map.move_y, -MOVE_PIXELS);
 	else if (key == 125)
-		c->map.move_y += 10;
+		move_map(c, &c->map.move_y, MOVE_PIXELS);
 	else if (key == 123)
-		c->map.move_x -= 10;
+		move_map(c, &c->map.move_x, -MOVE_PIXELS);
 	else if (key == 124)
-		c->map.move_x += 10;
+		move_map(c, &c->map.move_x, MOVE_PIXELS);
+	else if (key == 12)
+		adjust_scale(c, &c->map.scale, -1);
+	else if (key == 14)
+		adjust_scale(c, &c->map.scale, 1);
+	else if (key == 6)
+		adjust_scale(c, &c->map.z_height, -1);
+	else if (key == 7)
+		adjust_scale(c, &c->map.z_height, 1);
 	else
 		ft_putstr("accepted buttons: 'space' or 'esc' keys.\n");
-	if ((123 <= key && key <= 126) || key == 13 || key == 1)
-		put_img_map(c);
 	return (0);
 }
 

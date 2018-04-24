@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/22 19:03:48 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/23 11:41:33 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	fdf(char *filename)
 	mlx_string_put(c.mlx, c.window, 10, 90, 0xAAAAAA, "'esc'   - quit");
 
 	set_map(&c);
+	set_scale(&c);	
 
 	mlx_key_hook(c.window, key_pressed, &c);
 	mlx_mouse_hook(c.window, mouse_clicked, &c);
