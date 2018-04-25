@@ -1,25 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/24 23:51:18 by nmolina           #+#    #+#             */
+/*   Updated: 2018/04/25 00:50:14 by nmolina          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
-/* ------ LIBRARIES ------ */
+/*
+** ------ LIBRARIES ------
+*/
 # include "libft.h"
 # include "mlx.h"
 # include <math.h>
 # include <fcntl.h>
 
-# include <stdio.h> // remove this before turning in
-
-
-/* ------ VARIABLES ------ */
-# define WINDOW_WIDTH	1280
-# define WINDOW_HEIGHT	720
+/*
+** ------ VARIABLES ------
+*/
+# define WIN_WIDTH		1280
+# define WIN_HEIGHT		720
 # define OFF_X			0
 # define OFF_Y			0
 # define ROT_DEGREES	15
 # define MOVE_PIXELS	50
 # define BUF_SIZE 		500000
 
-/* ------ STRUCTS ------ */
+/*
+** ------ STRUCTS ------
+*/
 typedef struct	s_vector
 {
 	int			x;
@@ -54,7 +69,7 @@ typedef struct	s_img
 	int			*data;
 	int			width;
 	int			height;
-}					t_img;
+}				t_img;
 
 typedef struct	s_canvas
 {
@@ -67,11 +82,11 @@ typedef struct	s_canvas
 
 typedef struct	s_file
 {
-	char		**splitY;
-	char		**splitX;
+	char		**split_y;
+	char		**split_x;
 	char		*contents;
 	char		*temp;
-	char		buffer[BUF_SIZE + 1];	
+	char		buffer[BUF_SIZE + 1];
 	int			fd;
 	int			ret;
 }				t_file;
@@ -84,34 +99,51 @@ typedef struct	s_iterator
 	int			z;
 }				t_iterator;
 
-/* ------ PUBLIC FUNCTIONS ------ */
-/* main.c */
-void	usage();
-void	init_map(t_canvas *c);
-void	check_error(int err, char *msg);
+typedef struct	s_line
+{
+	int			dx;
+	int			dy;
+	int			sx;
+	int			sy;
+	int			err;
+	int			e2;
+}				t_line;
 
-/* events.c */
-int		key_pressed(int keycode, t_canvas *c);
-int		mouse_clicked(int button, int x, int y, t_canvas *c);
-
-/* render.c */
-void	clear_img(t_canvas *c);
-void	put_img_map(t_canvas *c);
-void	put_img_vector(t_canvas *c, t_vector vector);
-
-/* scanner.c */
-void    set_map(t_canvas *c);
-void	free_array(void **arr);
-
-/* transform.c */
-void	transform(t_map map, t_vector *v);
-void	set_scale(t_canvas *c);
-float	set_theta(int degrees);
-void	set_color(t_vector *v);
-
-/* mutate.c */
-void	rotate_axis(t_canvas *c, int *axis, int degrees);
-void    adjust_scale(t_canvas *c, int *scale, int direction);
-void    move_map(t_canvas *c, int *axis, int pixels);
+/*
+** ------ PUBLIC FUNCTIONS ------
+** main.c
+*/
+void			usage();
+void			init_map(t_canvas *c);
+void			check_error(int err, char *msg);
+/*
+** events.c
+*/
+int				key_pressed(int keycode, t_canvas *c);
+int				mouse_clicked(int button, int x, int y, t_canvas *c);
+/*
+** render.c
+*/
+void			clear_img(t_canvas *c);
+void			put_img_map(t_canvas *c);
+void			put_img_vector(t_canvas *c, t_vector vector);
+/*
+** scanner.c
+*/
+void			set_map(t_canvas *c);
+void			free_array(void **arr);
+/*
+** transform.c
+*/
+void			transform(t_map map, t_vector *v);
+void			set_scale(t_canvas *c);
+float			set_theta(int degrees);
+void			set_color(t_vector *v);
+/*
+** mutate.c
+*/
+void			rotate_axis(t_canvas *c, int *axis, int degrees);
+void			adjust_scale(t_canvas *c, int *scale, int direction);
+void			move_map(t_canvas *c, int *axis, int pixels);
 
 #endif

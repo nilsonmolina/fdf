@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/24 15:44:54 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/24 23:36:30 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,42 @@
 void	clear_img(t_canvas *c)
 {
 	mlx_destroy_image(c->mlx, c->img.img);
-	mlx_clear_window(c->mlx, c->window);	
-	c->img.img = mlx_new_image(c->mlx, WINDOW_WIDTH - OFF_X, WINDOW_HEIGHT - OFF_Y);	
+	mlx_clear_window(c->mlx, c->window);
+	c->img.img = mlx_new_image(c->mlx, WIN_WIDTH - OFF_X, WIN_HEIGHT - OFF_Y);
 }
 
-void draw_line(t_canvas *c, t_vector curr, t_vector next) {
-	
-	int dx = abs(next.x-curr.x), sx = curr.x<next.x ? 1 : -1;
-	int dy = abs(next.y-curr.y), sy = curr.y<next.y ? 1 : -1; 
-	int err = (dx>dy ? dx : -dy)/2, e2;
-	if (next.z > curr.z)
-		curr.color += next.color;
-	while(1)
+void	draw_line(t_canvas *c, t_vector curr, t_vector next)
+{
+	t_line	l;
+
+	l.dx = abs(next.x - curr.x);
+	l.sx = curr.x < next.x ? 1 : -1;
+	l.dy = abs(next.y - curr.y);
+	l.sy = curr.y < next.y ? 1 : -1;
+	l.err = (l.dx > l.dy ? l.dx : -l.dy) / 2;
+	next.z > curr.z ? curr.color += next.color : 0;
+	while (1)
 	{
 		put_img_vector(c, curr);
-    	if (curr.x==next.x && curr.y==next.y) break;
-    	e2 = err;
-    	if (e2 >-dx) { err -= dy; curr.x += sx; }
-    	if (e2 < dy) { err += dx; curr.y += sy; }
+		if (curr.x == next.x && curr.y == next.y)
+			break ;
+		l.e2 = l.err;
+		if (l.e2 > -l.dx)
+		{
+			l.err -= l.dy;
+			curr.x += l.sx;
+		}
+		if (l.e2 < l.dy)
+		{
+			l.err += l.dx;
+			curr.y += l.sy;
+		}
 	}
 }
 
-void		put_img_map(t_canvas *c)
+void	put_img_map(t_canvas *c)
 {
-	int i;
+	int			i;
 	t_vector	v;
 	t_vector	down;
 
@@ -59,13 +71,13 @@ void		put_img_map(t_canvas *c)
 			draw_line(c, v, c->map.previous);
 		put_img_vector(c, v);
 		c->map.previous = v;
-		i++;		
+		i++;
 	}
 	mlx_put_image_to_window(c->mlx, c->window, c->img.img, OFF_X, OFF_Y);
 	mlx_string_put(c->mlx, c->window, 10, 10, 0xFFFFFF, c->filename);
 }
 
-void		put_img_vector(t_canvas *c, t_vector v)
+void	put_img_vector(t_canvas *c, t_vector v)
 {
 	int	i;
 
