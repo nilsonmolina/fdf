@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/18 16:58:29 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/24 18:58:49 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,16 @@ void    set_vector(t_canvas *c, t_iterator *iter, t_file *file)
     if (val[1])
         c->map.vectors[iter->i].color = ft_atoi_base(val[1]+2, 16);
     else
-        c->map.vectors[iter->i].color = c->map.color;
+        set_color(&c->map.vectors[iter->i]);
     free_array((void **)val);
 }
 
-void    print_map(t_canvas *c) // remove this before turning in
+void	free_array(void **arr)
 {
-    int i = -1;
-    printf("Rows: %d | Columns: %d\n", c->map.rows, c->map.columns);    
-    while (++i < (c->map.rows * c->map.columns))
-        printf("y: %2d | x: %2d | z: %2d | color: %d\n", c->map.vectors[i].y, c->map.vectors[i].x, c->map.vectors[i].z, c->map.vectors[i].color);
+	int i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }

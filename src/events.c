@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/23 16:35:32 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/24 19:01:38 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ int		key_pressed(int key, t_canvas *c)
 	if (key == 53)
 		exit(0);
 	else if (key == 49)
-		clear_img(c);
+		init_map(c);
 	else if (key == 18)
 		put_img_map(c);
-	else if (key == 19)
-		print_map(c);
 	else if (key == 13)
 		rotate_axis(c, &c->map.rot_x, ROT_DEGREES);
 	else if (key == 1)

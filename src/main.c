@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/23 11:41:33 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/24 18:52:55 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,9 @@ void	fdf(char *filename)
 	c.img.width = WINDOW_WIDTH - OFF_X;
 	c.img.height = WINDOW_HEIGHT - OFF_Y;
 	c.filename = filename;
-	c.map.color = 0xFFFFFF;
-	c.map.rot_x = 0;
-	c.map.rot_y = 0;
-	c.map.move_x = 0;
-	c.map.move_y = 0;
 
-	mlx_string_put(c.mlx, c.window, 10, 10, 0xFFFFFF, c.filename);
-	mlx_string_put(c.mlx, c.window, 10, 30, 0xAAAAAA, "'1'     - render_map");
-	mlx_string_put(c.mlx, c.window, 10, 50, 0xAAAAAA, "'2'     - print_map_array");
-	mlx_string_put(c.mlx, c.window, 10, 70, 0xAAAAAA, "'space' - clear_map");
-	mlx_string_put(c.mlx, c.window, 10, 90, 0xAAAAAA, "'esc'   - quit");
-
-	set_map(&c);
-	set_scale(&c);	
+	set_map(&c);	
+	init_map(&c);
 
 	mlx_key_hook(c.window, key_pressed, &c);
 	mlx_mouse_hook(c.window, mouse_clicked, &c);
@@ -71,35 +60,16 @@ void	check_error(int err, char *msg)
 	}
 }
 
-void	free_array(void **arr)
+void	init_map(t_canvas *c)
 {
-	int i;
+	c->map.rot_x = 15;
+	c->map.rot_y = 0;
+	c->map.move_x = 0;
+	c->map.move_y = 0;
 
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	set_scale(c);
+	c->map.center_x = (WINDOW_WIDTH - (c->map.columns * c->map.scale)) / 2;
+	c->map.center_y = (WINDOW_HEIGHT - (c->map.rows * c->map.scale)) / 2;
+	c->map.z_height /= 2;
+	put_img_map(c);
 }
-
-// void	ft_check_args(t_canvas *c, int argc, char **argv)
-// {
-// 	int i;
-
-// 	i = 1;
-// 	(argc >= 2 && argc <= 6) ? 0 : ft_usage();
-// 	c->file = ft_strdup(argv[1]);
-// 	c->w_x = 0;
-// 	c->w_y = 0;
-// 	while (i < argc)
-// 	{
-// 		if (!ft_strcmp(argv[i], "-w") && i + 1 < ac)
-// 			c->w_x = ft_atoi(argv[i + 1]);
-// 		else if (!ft_strcmp(argv[i], "-h") && i + 1 < ac)
-// 			c->w_y = ft_atoi(argv[i + 1]);
-// 		else if (!ft_strcmp(argv[i], "--help"))
-// 			ft_usage();
-// 		i++;
-// 	}
-// 	c->w_x = (c->w_x < 600 || c->w_x > 1920 ? 1280 : c->w_x);
-// 	c->w_y = (c->w_y < 600 || c->w_y > 1280 ? 1024 : c->w_y);
-// }

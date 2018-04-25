@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/23 18:35:57 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/24 15:44:54 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,56 @@ void	clear_img(t_canvas *c)
 	c->img.img = mlx_new_image(c->mlx, WINDOW_WIDTH - OFF_X, WINDOW_HEIGHT - OFF_Y);	
 }
 
-// void draw_line(t_canvas *c, int x0, int y0, int x1, int y1) {
+void draw_line(t_canvas *c, t_vector curr, t_vector next) {
 	
-// 	int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
-// 	int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-// 	int err = (dx>dy ? dx : -dy)/2, e2;
- 
-// 	for(;;){
-// 		put_img_pixel(&c->img, x0, y0, 0xFFFFFF);
-//     	if (x0==x1 && y0==y1) break;
-//     	e2 = err;
-//     	if (e2 >-dx) { err -= dy; x0 += sx; }
-//     	if (e2 < dy) { err += dx; y0 += sy; }
-// 	}
-// }
+	int dx = abs(next.x-curr.x), sx = curr.x<next.x ? 1 : -1;
+	int dy = abs(next.y-curr.y), sy = curr.y<next.y ? 1 : -1; 
+	int err = (dx>dy ? dx : -dy)/2, e2;
+	if (next.z > curr.z)
+		curr.color += next.color;
+	while(1)
+	{
+		put_img_vector(c, curr);
+    	if (curr.x==next.x && curr.y==next.y) break;
+    	e2 = err;
+    	if (e2 >-dx) { err -= dy; curr.x += sx; }
+    	if (e2 < dy) { err += dx; curr.y += sy; }
+	}
+}
 
 void		put_img_map(t_canvas *c)
 {
 	int i;
+	t_vector	v;
+	t_vector	down;
 
 	clear_img(c);
 	i = 0;
 	while (i < (c->map.rows * c->map.columns))
-		put_img_vector(c, c->map.vectors[i++]);
+	{
+		v = c->map.vectors[i];
+		transform(c->map, &v);
+		if (i < (c->map.rows * c->map.columns) - c->map.columns)
+		{
+			down = c->map.vectors[i + c->map.columns];
+			transform(c->map, &down);
+			draw_line(c, v, down);
+			put_img_vector(c, down);
+		}
+		if (i > 0 && i % c->map.columns != 0)
+			draw_line(c, v, c->map.previous);
+		put_img_vector(c, v);
+		c->map.previous = v;
+		i++;		
+	}
 	mlx_put_image_to_window(c->mlx, c->window, c->img.img, OFF_X, OFF_Y);
-	mlx_string_put(c->mlx, c->window, 10, 10, 0xFFFFFF, "render_map");
+	mlx_string_put(c->mlx, c->window, 10, 10, 0xFFFFFF, c->filename);
 }
 
-void		put_img_vector(t_canvas *c, t_vector vector)
+void		put_img_vector(t_canvas *c, t_vector v)
 {
-	int 		i;
-	t_vector	v;
+	int	i;
 
-	v = vector;
-	transform(c->map, &v);
 	if (v.x > c->img.width - 1 || v.x < 1)
 		return ;
 	i = (v.x) + ((v.y) * c->img.width);
@@ -60,31 +76,3 @@ void		put_img_vector(t_canvas *c, t_vector vector)
 		return ;
 	c->img.data[i] = v.color;
 }
-/*
-	DONE: x = x * scaling factor;
-	DONE: y = y * scaling factor;
-	DONE: z = z * scaling factor;
-
-	Rotation:
-	rotation_x:
-	theta = convert_degrees_to_radian(degrees_x)
-	y = formula
-	z = formala
-
-	rotate_y:
-	theta = convert_degrees_to_radian(degrees_y)
-	x = formula
-	z = formula
-	rotate_z
-	theta = convert_degrees_to_radian(degrees_z)
-	y = formual
-	x = formula
-
-	Center:
-
-	x = WIDTH/2
-	y = Height/2 somesnit like that
-
-	vector.x = x
-	vector.y = y
-*/

@@ -13,8 +13,8 @@
 /* ------ VARIABLES ------ */
 # define WINDOW_WIDTH	1280
 # define WINDOW_HEIGHT	720
-# define OFF_X			75
-# define OFF_Y			75
+# define OFF_X			0
+# define OFF_Y			0
 # define ROT_DEGREES	15
 # define MOVE_PIXELS	50
 # define BUF_SIZE 		500000
@@ -31,13 +31,14 @@ typedef struct	s_vector
 typedef struct	s_map
 {
 	t_vector	*vectors;
+	t_vector	previous;
 	int			rows;
 	int			columns;
-	int			color;
 	int			scale;
+	int			min_scale;
 	int			z_height;
-	int			cntr_x;
-	int			cntr_y;
+	int			center_x;
+	int			center_y;
 	int			rot_x;
 	int			rot_y;
 	int			move_x;
@@ -86,8 +87,8 @@ typedef struct	s_iterator
 /* ------ PUBLIC FUNCTIONS ------ */
 /* main.c */
 void	usage();
+void	init_map(t_canvas *c);
 void	check_error(int err, char *msg);
-void	free_array(void **arr);
 
 /* events.c */
 int		key_pressed(int keycode, t_canvas *c);
@@ -100,12 +101,13 @@ void	put_img_vector(t_canvas *c, t_vector vector);
 
 /* scanner.c */
 void    set_map(t_canvas *c);
-void    print_map(t_canvas *c); // remove this before turning in
+void	free_array(void **arr);
 
 /* transform.c */
 void	transform(t_map map, t_vector *v);
 void	set_scale(t_canvas *c);
 float	set_theta(int degrees);
+void	set_color(t_vector *v);
 
 /* mutate.c */
 void	rotate_axis(t_canvas *c, int *axis, int degrees);
