@@ -12,19 +12,19 @@ https://github.com/qst0/ft_libgfx
 The Minilibx library provided on the project page of 42, will not work on macOS Sierra or newer, but fortunately, you will find one here.  This is also a treasure trove of information and I recommend you spend more time there than you do here.
 
 But after that, you can consider taking a quick look at my `_resources/basics` folder. In it, I have included a few examples of a lot of the basics to get things rolling.  As a disclaimer, I wrote these when I was learning how to use MiniLibX and they are just simple attempts at testing things out. They do NOT have any best practices, they ARE very rudimentary, and there WILL be mistsakes in them. But this is how I started learning, and hopefully it may help you as well.
-1. [Put Pixel](/_resources/basics/01-put-pixel/main.c)  
+1. [Put Pixel](./_resources/_basics/01-put-pixel/main.c)  
     In this example, I simply open an mlx window of a predetermined size (400x400 pixels) and draw a 100 by 100 pixel square. A lot of what you see here is the basis of all minilibx projects.
-1. [Events](/_resources/basics/02-events/main.c)  
+1. [Events](./_resources/_basics/02-events/main.c)  
     Now we move on to listening to user events, like a key press or a mouse click.  These are obviously very basic examples, but you can do a lot with this.  My final version of fdf utilizes other "hooks" to detect key holding, which is described in more detail at the github resource provided above.
-1. [Clear Window](/_resources/basics/02-events/main.c)  
+1. [Clear Window](./_resources/_basics/03-clear-window/main.c)  
     Now you obviously want your images to change, and one step is to actually clear what is onscreen before you start drawing your next image.  This was a simple attempt at doing just that.
-1. [Clear Draw](/_resources/basics/02-events/main.c)  
+1. [Clear Draw](./_resources/_basics/04-clear-draw/main.c)  
     Very similar to the previous one, however I start testing out pointers instead. Once again, I clear the image using mouse click and key press events.
-1. [Put Image](/_resources/basics/02-events/main.c)  
+1. [Put Image](./_resources/_basics/05-put-image/main.c)  
     Now we move onto more advanced topics.  Rather than using the built in 'mlx_pixel_put', we start dealing with mlx images by getting it's data address, adding colors to different locations in that data address, and finally putting the image in the mlx window.
-1. [General Improvements](/_resources/basics/02-events/main.c)   
+1. [General Improvements](./_resources/_basics/06-improved/)   
     In here, I just make a few general improvements to the previous example.  I start better organizing the code and cleaning up a few unneccesary things.
-1. [GNL vs Buffer](/_resources/basics/02-events/main.c)    
+1. [GNL vs Buffer](./_resources/_basics/07-gnl-vs-buffer/)    
     This is a more complete project and me testing different implementations for fdf.  There are definitely bugs in here, as this was just a backup of my fdf code, before moving forward.
 
 # Bresenham's Line Algorithm
