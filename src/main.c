@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/24 21:04:19 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 13:58:03 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,22 @@ void	fdf(char *filename)
 	c.img.width = WIN_WIDTH - OFF_X;
 	c.img.height = WIN_HEIGHT - OFF_Y;
 	c.filename = filename;
+	c.shft = 0;
+	c.mode = 1;
+	c.color_on = -1;
 	set_map(&c);
 	init_map(&c);
-	mlx_key_hook(c.window, key_pressed, &c);
-	mlx_mouse_hook(c.window, mouse_clicked, &c);
+	mlx_hook(c.window, 2, 0, key_hold, &c);
+	mlx_key_hook(c.window, key_up, &c);
 	mlx_loop(c.mlx);
 }
 
 int		main(int argc, char **argv)
 {
-	if (argc != 2)
-		usage();
-	else
+	if (argc == 2)
 		fdf(argv[1]);
+	else
+		usage();		
 	return (0);
 }
 
@@ -59,13 +62,13 @@ void	check_error(int err, char *msg)
 
 void	init_map(t_canvas *c)
 {
-	c->map.rot_x = 15;
+	c->map.rot_x = 5;
 	c->map.rot_y = 0;
 	c->map.move_x = 0;
 	c->map.move_y = 0;
 	set_scale(c);
 	c->map.center_x = (WIN_WIDTH - (c->map.columns * c->map.scale)) / 2;
 	c->map.center_y = (WIN_HEIGHT - (c->map.rows * c->map.scale)) / 2;
-	c->map.z_height /= 2;
+	c->map.z_height = 1;
 	put_img_map(c);
 }

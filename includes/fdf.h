@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 23:51:18 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/25 00:50:14 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:03:12 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <math.h>
 # include <fcntl.h>
 
+# include <stdio.h>
 /*
 ** ------ VARIABLES ------
 */
@@ -28,8 +29,8 @@
 # define WIN_HEIGHT		720
 # define OFF_X			0
 # define OFF_Y			0
-# define ROT_DEGREES	15
-# define MOVE_PIXELS	50
+# define ROT_DEGREES	5
+# define MV_PIXELS		5
 # define BUF_SIZE 		500000
 
 /*
@@ -49,9 +50,9 @@ typedef struct	s_map
 	t_vector	previous;
 	int			rows;
 	int			columns;
-	int			scale;
-	int			min_scale;
-	int			z_height;
+	int			scale;	
+	int			max_z;
+	float		z_height;
 	int			center_x;
 	int			center_y;
 	int			rot_x;
@@ -78,6 +79,9 @@ typedef struct	s_canvas
 	char		*filename;
 	t_img		img;
 	t_map		map;
+	int			shft;
+	int			mode;
+	int			color_on;
 }				t_canvas;
 
 typedef struct	s_file
@@ -119,7 +123,8 @@ void			check_error(int err, char *msg);
 /*
 ** events.c
 */
-int				key_pressed(int keycode, t_canvas *c);
+int				key_up(int key, t_canvas *c);
+int				key_hold(int key, t_canvas *c);
 int				mouse_clicked(int button, int x, int y, t_canvas *c);
 /*
 ** render.c
@@ -135,15 +140,16 @@ void			free_array(void **arr);
 /*
 ** transform.c
 */
-void			transform(t_map map, t_vector *v);
+void			transform(t_canvas c, t_vector *v);
 void			set_scale(t_canvas *c);
 float			set_theta(int degrees);
-void			set_color(t_vector *v);
+void			set_color(t_vector *v, t_map map);
 /*
 ** mutate.c
 */
 void			rotate_axis(t_canvas *c, int *axis, int degrees);
-void			adjust_scale(t_canvas *c, int *scale, int direction);
+void			adjust_scale(t_canvas *c, int direction);
+void			adjust_height(t_canvas *c, float direction);
 void			move_map(t_canvas *c, int *axis, int pixels);
 
 #endif

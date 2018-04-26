@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 19:19:40 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/24 22:11:01 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/25 16:54:00 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,33 @@ void	rotate_axis(t_canvas *c, int *axis, int degrees)
 	put_img_map(c);
 }
 
-void	adjust_scale(t_canvas *c, int *scale, int direction)
+void	adjust_scale(t_canvas *c, int direction)
 {
 	double s;
 
-	if (direction > 0)
-		s = *scale *= 1.2;
-	else if (direction < 0)
-		s = *scale /= 1.2;
-	else
-		return ;
+	direction > 0 ? (s = c->map.scale *= 1.2) : (s = c->map.scale /= 1.2);
 	if (s < 1 && direction > 0)
 		s = 1;
-	if (s == *scale && direction > 0)
+	if (s == c->map.scale && direction > 0)
 		s++;
-	if (s * c->map.rows > WIN_HEIGHT * 2)
-		s = (WIN_HEIGHT * 2) / c->map.rows;
-	else if (s * c->map.columns > WIN_WIDTH * 2)
-		s = (WIN_WIDTH * 2) / c->map.columns;
-	if (s < 1 && direction > 0)
+	if (s * c->map.rows > WIN_HEIGHT * 4)
+		s = (WIN_HEIGHT * 4) / c->map.rows;
+	else if (s * c->map.columns > WIN_WIDTH * 4)
+		s = (WIN_WIDTH * 4) / c->map.columns;
+	if (s < 1)
 		s = 1;
-	*scale = s;
+	c->map.scale = s;
 	put_img_map(c);
 }
 
 void	move_map(t_canvas *c, int *axis, int pixels)
 {
 	*axis += pixels;
+	put_img_map(c);
+}
+
+void	adjust_height(t_canvas *c, float direction)
+{
+	c->map.z_height += direction;
 	put_img_map(c);
 }

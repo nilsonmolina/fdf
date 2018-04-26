@@ -3,47 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 17:23:27 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/24 22:10:50 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 13:52:20 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		transform(t_map map, t_vector *v)
+void		transform(t_canvas c, t_vector *v)
 {
-	float theta;
+	float 	theta;
+	int		x;
+	int		y;
+	int		z;
 
-	v->x *= map.scale;
-	v->y *= map.scale;
-	v->z *= map.z_height;
-	theta = set_theta(map.rot_x);
-	v->y = v->y * cos(theta) - v->z * sin(theta);
-	theta = set_theta(map.rot_y);
-	v->x = v->x * cos(theta) + v->z * sin(theta);
-	v->x += map.move_x;
-	v->y += map.move_y;
-	v->x += map.center_x;
-	v->y += map.center_y;
+	x = v->x * c.map.scale;
+	y = v->y * c.map.scale;
+	z = v->z * (c.map.z_height * c.map.scale);
+	c.color_on == 1 ? set_color(v, c.map) : 0;		
+	theta = set_theta(c.map.rot_y);
+	v->x = x * cos(theta) - z * sin(theta);
+	v->z = z * cos(theta) + x * sin(theta);
+	theta = set_theta(c.map.rot_x);
+	v->y = y * cos(theta) - z * sin(theta);
+	v->z = z * cos(theta) + y * sin(theta);
+	v->x += c.map.move_x;
+	v->y += c.map.move_y;
+	v->x += c.map.center_x;
+	v->y += c.map.center_y;
 }
 
 void		set_scale(t_canvas *c)
 {
-	int scale_x;
-	int scale_y;
+	int sx;
+	int sy;
 
-	scale_x = (c->img.width - 200) / c->map.columns;
-	scale_y = (c->img.height - 200) / c->map.rows;
-	if (scale_x < scale_y)
-		c->map.scale = scale_x / 1.2;
-	else
-		c->map.scale = scale_y / 1.2;
-	if (c->map.scale == 0)
-		c->map.scale = 1;
-	c->map.z_height = c->map.scale / 2;
-	c->map.min_scale = c->map.scale / 2;
+	sx = (c->img.width - 200) / c->map.columns;
+	sy = (c->img.height - 200) / c->map.rows;
+	(sx < sy) ? (c->map.scale = sx / 2) : (c->map.scale = sy / 2);
+	c->map.scale == 0 ? c->map.scale = 1 : 0;	
 }
 
 float		set_theta(int degrees)
@@ -56,12 +56,21 @@ float		set_theta(int degrees)
 	return (radians);
 }
 
-void		set_color(t_vector *v)
+void		set_color(t_vector *v, t_map map)
 {
+	map.max_z *= map.scale;
 	if (v->z == 0)
 		v->color = 0xFFFFFF;
-	else if (v->z < 5)
-		v->color = 0xFF8C00;
+	else if (map.max_z <= v->z)
+		v->color = 0xFF44FF;
+	else if (map.max_z / 5 < v->z && v->z < map.max_z / 3)
+		v->color = 0xAA4444;
+	else if(map.max_z / 3 < v->z && v->z < map.max_z / 2)
+		v->color = 0x44FF44;
+	else if(map.max_z / 2 < v->z && v->z < map.max_z)
+		v->color = 0x4444FF;
+	else if (v->z < 0)
+		v->color = 0xFF0000;
 	else
-		v->color = 0xFF00FF;
+		v->color = 0x444444;
 }

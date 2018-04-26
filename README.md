@@ -9,7 +9,7 @@ MiniLibx is an in house graphics library for students at 42 to cry and curse ove
 Link from Andy:  
 https://github.com/qst0/ft_libgfx
 
-The Minilibx library provided on the project page of 42, will not work on macOS Sierra or newer, but fortunately, you will find one here.  This is also a treasure trove of information and I recommend you spend more time there than you do here.
+The Minilibx library provided on the project page of 42, will not work on macOS Sierra or newer, but fortunately, you will find an updated one here.  This is also a treasure trove of information and I recommend you spend more time there than you do here.
 
 But after that, you can consider taking a quick look at my `_resources/basics` folder. In it, I have included a few examples of a lot of the basics to get things rolling.  As a disclaimer, I wrote these when I was learning how to use MiniLibX and they are just simple attempts at testing things out. They do NOT have any best practices, they ARE very rudimentary, and there WILL be mistsakes in them. But this is how I started learning, and hopefully it may help you as well.
 1. [Put Pixel](./_resources/_basics/01-put-pixel/main.c)  
@@ -107,3 +107,9 @@ var rotateX3D = function(theta) {
 
 Reference:  
 http://petercollingridge.appspot.com/3D-tutorial/rotating-objects
+
+## Hex Colors
+The colors provided in some of the maps for fdf are in Hexadecimal.  The below link can provide a very quick and rudimentary understanding of how hex-colors work.
+
+Reference:  
+https://www.mathsisfun.com/hexadecimal-decimal-colors.html

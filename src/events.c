@@ -3,39 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/24 22:11:37 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 15:59:53 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		key_pressed(int key, t_canvas *c)
+int		key_up(int key, t_canvas *c)
 {
-	(key == 53) ? exit(0) : 0;
-	(key == 49) ? init_map(c) : 0;
-	(key == 18) ? put_img_map(c) : 0;
-	(key == 13) ? rotate_axis(c, &c->map.rot_x, ROT_DEGREES) : 0;
-	(key == 1) ? rotate_axis(c, &c->map.rot_x, -ROT_DEGREES) : 0;
-	(key == 0) ? rotate_axis(c, &c->map.rot_y, -ROT_DEGREES) : 0;
-	(key == 2) ? rotate_axis(c, &c->map.rot_y, ROT_DEGREES) : 0;
-	(key == 126) ? move_map(c, &c->map.move_y, -MOVE_PIXELS) : 0;
-	(key == 125) ? move_map(c, &c->map.move_y, MOVE_PIXELS) : 0;
-	(key == 123) ? move_map(c, &c->map.move_x, -MOVE_PIXELS) : 0;
-	(key == 124) ? move_map(c, &c->map.move_x, MOVE_PIXELS) : 0;
-	(key == 12) ? adjust_scale(c, &c->map.scale, -1) : 0;
-	(key == 14) ? adjust_scale(c, &c->map.scale, 1) : 0;
-	(key == 6) ? adjust_scale(c, &c->map.z_height, -1) : 0;
-	(key == 7) ? adjust_scale(c, &c->map.z_height, 1) : 0;
-	return (0);
+	key == 53 ? exit(0) : 0;
+	key == 49 ? init_map(c) : 0;
+	key == 257 ? c->shft = 0 : 0;
+	key == 48 ? c->mode *= -1 : 0;
+	key == 8 ? c->color_on *= -1 : 0;
+	if (key == 48 || key == 8)
+		put_img_map(c);
+	printf("key: %d\n", key);
+	return (0);	
 }
 
-int		mouse_clicked(int button, int x, int y, t_canvas *c)
+int		key_hold(int key, t_canvas *c)
 {
-	button = 0;
-	if ((x >= 50 && x <= 150) && (y >= 50 && y <= 150))
-		mlx_clear_window(c->mlx, c->window);
+	key == 12 ? adjust_scale(c, -1) : 0;
+	key == 14 ? adjust_scale(c, 1) : 0;
+	key == 6 ? adjust_height(c, -0.1) : 0;
+	key == 7 ? adjust_height(c, 0.1) : 0;
+	key == 13 ? rotate_axis(c, &c->map.rot_x, ROT_DEGREES) : 0;
+	key == 1 ? rotate_axis(c, &c->map.rot_x, -ROT_DEGREES) : 0;
+	key == 0 ? rotate_axis(c, &c->map.rot_y, -ROT_DEGREES) : 0;
+	key == 2 ? rotate_axis(c, &c->map.rot_y, ROT_DEGREES) : 0;
+	key == 257 ? c->shft = 1 : 0;
+	key == 126 && c->shft == 0 ? move_map(c, &c->map.move_y, -MV_PIXELS) : 0;
+	key == 125 && c->shft == 0 ? move_map(c, &c->map.move_y, MV_PIXELS) : 0;
+	key == 123 && c->shft == 0 ? move_map(c, &c->map.move_x, -MV_PIXELS) : 0;
+	key == 124 && c->shft == 0 ? move_map(c, &c->map.move_x, MV_PIXELS) : 0;
+	key == 126 && c->shft == 1 ? move_map(c, &c->map.move_y, -MV_PIXELS * 5) : 0;
+	key == 125 && c->shft == 1 ? move_map(c, &c->map.move_y, MV_PIXELS * 5) : 0;
+	key == 123 && c->shft == 1 ? move_map(c, &c->map.move_x, -MV_PIXELS * 5) : 0;
+	key == 124 && c->shft == 1 ? move_map(c, &c->map.move_x, MV_PIXELS * 5) : 0;
 	return (0);
 }

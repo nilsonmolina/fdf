@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/24 23:58:05 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 14:03:17 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	read_file(t_canvas *c, t_file *file)
 {
 	int i;
 
-	file->contents = ft_memalloc(1);
 	check_error((file->fd = open(c->filename, O_RDONLY)),
 			"Failed to open file.");
+	file->contents = ft_memalloc(1);
 	while ((file->ret = read(file->fd, &file->buffer, BUF_SIZE)))
 	{
 		file->buffer[file->ret] = '\0';
@@ -48,10 +48,17 @@ void	set_vector(t_canvas *c, t_iterator *iter, t_file *file)
 	c->map.vectors[iter->i].x = iter->x;
 	c->map.vectors[iter->i].y = iter->y;
 	c->map.vectors[iter->i].z = ft_atoi_base(file->split_x[iter->x], 10);
+	if (c->map.vectors[iter->i].z > c->map.max_z)
+		c->map.max_z = c->map.vectors[iter->i].z;
 	if (val[1])
 		c->map.vectors[iter->i].color = ft_atoi_base(val[1] + 2, 16);
 	else
-		set_color(&c->map.vectors[iter->i]);
+	{
+		if (c->map.vectors[iter->i].z == 0)
+			c->map.vectors[iter->i].color = 0x22FF22;
+		else
+			c->map.vectors[iter->i].color = 0xFF22FF;
+	}		
 	free_array((void **)val);
 }
 
@@ -60,6 +67,7 @@ void	create_map(t_canvas *c, t_file *file)
 	t_iterator	iter;
 
 	c->map.vectors = malloc(sizeof(t_vector) * (c->map.rows * c->map.columns));
+	c->map.max_z = 0;
 	iter.i = 0;
 	iter.y = 0;
 	while (file->split_y[iter.y])
