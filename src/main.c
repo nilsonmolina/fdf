@@ -3,43 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 19:07:50 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 21:33:11 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fdf(char *filename)
+int		main(int argc, char **argv)
 {
 	t_canvas c;
-
+	
+	if (argc != 2)
+		usage();
+	c.filename = argv[1];		
 	c.mlx = mlx_init();
 	c.window = mlx_new_window(c.mlx, WIN_WIDTH, WIN_HEIGHT, "nmolina fdf");
-	c.img.img = mlx_new_image(c.mlx, WIN_WIDTH - OFF_X, WIN_HEIGHT - OFF_Y);
-	c.img.data = (int *)mlx_get_data_addr(c.img.img,
-			&c.img.bpp, &c.img.sl, &c.img.e);
 	c.img.width = WIN_WIDTH - OFF_X;
 	c.img.height = WIN_HEIGHT - OFF_Y;
-	c.filename = filename;
+	c.img.img = mlx_new_image(c.mlx, c.img.width, c.img.height);
+	c.img.data = (int *)mlx_get_data_addr(c.img.img,
+			&c.img.bpp, &c.img.sl, &c.img.e);
 	c.shft = 0;
 	c.mode = 1;
 	c.color_on = -1;
 	set_map(&c);
-	init_map(&c);
 	mlx_hook(c.window, 2, 0, key_hold, &c);
 	mlx_key_hook(c.window, key_up, &c);
 	mlx_loop(c.mlx);
-}
-
-int		main(int argc, char **argv)
-{
-	if (argc == 2)
-		fdf(argv[1]);
-	else
-		usage();
 	return (0);
 }
 

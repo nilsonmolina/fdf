@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 19:19:40 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 17:52:27 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:18:27 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	rotate_axis(t_canvas *c, int *axis, int degrees)
 
 	d = *axis + degrees;
 	if (d >= 360)
-		*axis = 0 + (d - 360);
+		*axis = 0;
 	else if (d <= 0)
-		*axis = 360 - (0 - d);
+		*axis = 355;
 	else
 		*axis = d;
 	put_img_map(c);
@@ -34,9 +34,9 @@ void	adjust_scale(t_canvas *c, int direction)
 	if (direction > 0)
 	{
 		s++;
-		if (s * c->map.rows > WIN_HEIGHT * 4)
+		if (s * c->map.rows > WIN_HEIGHT * 5)
 			s--;
-		else if (s * c->map.columns > WIN_WIDTH * 4)
+		if (s * c->map.columns > WIN_WIDTH * 5)
 			s--;
 	}
 	else

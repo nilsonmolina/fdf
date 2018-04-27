@@ -115,6 +115,7 @@ Reference:
 https://www.mathsisfun.com/hexadecimal-decimal-colors.html
 
 ## fsanitize error:
+I was able to fix this issue by using `ft_bzero()` on the image data address, instead of using `mlx_destroy_image()` to clear the image. 
 ```bash
 ==75210==AddressSanitizer CHECK failed: /BuildRoot/Library/Caches/com.apple.xbs/Sources/clang_compiler_rt/clang-900.0.39.2/src/projects/compiler-rt/lib/asan/asan_allocator.cc:137 "((m->chunk_state)) == ((CHUNK_QUARANTINE))" (0x0, 0x3)
     #0 0x10e069f5f in __asan::AsanCheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x60f5f)

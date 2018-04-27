@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 17:23:27 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 19:22:03 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:58:43 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,24 @@ float		set_theta(int degrees)
 void		set_color(t_vector *v, t_map *map)
 {
 	int	max_z;
+	int	z;
 
+	z = v->z * (map->z_height * map->scale);
 	max_z = map->scale * map->max_z;
-	if (v->z == 0)
-		v->color = 0xFFFFFF;
-	else if (max_z <= v->z)
-		v->color = 0xFF44FF;
-	else if (max_z / 5 < v->z && v->z < max_z / 3)
-		v->color = 0xAA4444;
-	else if (max_z / 3 < v->z && v->z < max_z / 2)
-		v->color = 0x44FF44;
-	else if (max_z / 2 < v->z && v->z < max_z)
-		v->color = 0x4444FF;
-	else if (v->z < 0)
-		v->color = 0xFF0000;
+	if (z >= max_z)
+		v->color = RED;
+	else if (max_z * 0.8 <= z && z < max_z)
+		v->color = 0x999922;
+	else if (max_z * 0.6 <= z && z < max_z * 0.8)
+		v->color = GREEN;
+	else if (max_z * 0.4 <= z && z < max_z * 0.6)
+		v->color = 0x229999;
+	else if (max_z * 0.2 <= z && z < max_z * 0.4)
+		v->color = BLUE;
+	else if (0 < z && z < max_z * 0.2)
+		v->color = 0x222299;
+	else if (z == 0)
+		v->color = WHITE;
 	else
-		v->color = 0x444444;
+		v->color = DGREY;		
 }

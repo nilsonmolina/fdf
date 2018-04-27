@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 23:51:18 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 17:35:14 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:43:15 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-
 /*
 ** ------ LIBRARIES ------
 */
@@ -20,8 +19,6 @@
 # include "mlx.h"
 # include <math.h>
 # include <fcntl.h>
-
-# include <stdio.h>
 /*
 ** ------ VARIABLES ------
 */
@@ -31,12 +28,14 @@
 # define OFF_Y			0
 # define ROT_DEGREES	5
 # define MV_PIXELS		5
-# define BUF_SIZE 		500000
+# define BUF_SIZE 		102400
 # define RED			0xFF2222
 # define GREEN			0x22FF22
+# define BLUE			0x2222FF
+# define PURPLE			0xFF22FF
 # define WHITE			0xFFFFFF
 # define GREY			0xAAAAAA
-
+# define DGREY			0x444444
 /*
 ** ------ STRUCTS ------
 */
@@ -116,7 +115,6 @@ typedef struct	s_line
 	int			err;
 	int			e2;
 }				t_line;
-
 /*
 ** ------ PUBLIC FUNCTIONS ------
 ** main.c

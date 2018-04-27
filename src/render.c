@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 18:44:13 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 00:14:15 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	clear_img(t_canvas *c)
 {
-	mlx_destroy_image(c->mlx, c->img.img);
 	mlx_clear_window(c->mlx, c->window);
-	c->img.img = mlx_new_image(c->mlx, WIN_WIDTH - OFF_X, WIN_HEIGHT - OFF_Y);
-	c->img.data = (int *)mlx_get_data_addr(c->img.img,
-			&c->img.bpp, &c->img.sl, &c->img.e);
+	ft_bzero(c->img.data, sizeof(int) * c->img.width * c->img.height);
 }
 
 void	put_strings(void *mlx, void *w, t_canvas *c)

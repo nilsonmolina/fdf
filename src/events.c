@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:50 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 19:04:00 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 01:05:54 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int		key_up(int key, t_canvas *c)
 {
 	key == 53 ? exit(0) : 0;
+	key == 49 ? init_map(c) : 0;
 	key == 257 ? c->shft = 0 : 0;
 	key == 48 ? c->mode *= -1 : 0;
 	key == 8 ? c->color_on *= -1 : 0;
 	if (key == 48 || key == 8)
 		put_img_map(c);
-	printf("key: %d\n", key);
 	return (0);
 }
 
