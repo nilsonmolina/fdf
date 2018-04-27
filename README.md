@@ -113,3 +113,28 @@ The colors provided in some of the maps for fdf are in Hexadecimal.  The below l
 
 Reference:  
 https://www.mathsisfun.com/hexadecimal-decimal-colors.html
+
+## fsanitize error:
+```bash
+==75210==AddressSanitizer CHECK failed: /BuildRoot/Library/Caches/com.apple.xbs/Sources/clang_compiler_rt/clang-900.0.39.2/src/projects/compiler-rt/lib/asan/asan_allocator.cc:137 "((m->chunk_state)) == ((CHUNK_QUARANTINE))" (0x0, 0x3)
+    #0 0x10e069f5f in __asan::AsanCheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x60f5f)
+    #1 0x10e0811f7 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x781f7)
+    #2 0x10e00e752 in __asan::QuarantineCallback::Recycle(__asan::AsanChunk*) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x5752)
+    #3 0x10e00e441 in __sanitizer::Quarantine<__asan::QuarantineCallback, __asan::AsanChunk>::DoRecycle(__sanitizer::QuarantineCache<__asan::QuarantineCallback>*, __asan::QuarantineCallback) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x5441)
+    #4 0x10e00e315 in __sanitizer::Quarantine<__asan::QuarantineCallback, __asan::AsanChunk>::Recycle(__asan::QuarantineCallback) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x5315)
+    #5 0x10e010d3b in __sanitizer::Quarantine<__asan::QuarantineCallback, __asan::AsanChunk>::Put(__sanitizer::QuarantineCache<__asan::QuarantineCallback>*, __asan::QuarantineCallback, __asan::AsanChunk*, unsigned long) (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x7d3b)
+    #6 0x10e062130 in wrap_free (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x59130)
+    #7 0x10dfe3c17 in mlx_destroy_image (fdf:x86_64+0x10000ec17)
+    #8 0x10dfd7f4d in clear_img render.c:17
+    #9 0x10dfda8fb in put_img_map render.c:86
+    #10 0x10dfdfbb5 in rotate_axis mutate.c:26
+    #11 0x10dfd78ce in key_hold events.c:36
+    #12 0x7fff2e04a028 in -[NSWindow(NSEventRouting) _reallySendEvent:isDelayedEvent:] (AppKit:x86_64+0x976028)
+    #13 0x7fff2e04885b in -[NSWindow(NSEventRouting) sendEvent:] (AppKit:x86_64+0x97485b)
+    #14 0x7fff2dea9fa2 in -[NSApplication(NSEvent) sendEvent:] (AppKit:x86_64+0x7d5fa2)
+    #15 0x7fff2d70ad9c in -[NSApplication run] (AppKit:x86_64+0x36d9c)
+    #16 0x10dfe33c5 in mlx_loop (fdf:x86_64+0x10000e3c5)
+    #17 0x10dfd6f60 in fdf main.c:36
+    #18 0x10dfd757d in main main.c:42
+    #19 0x7fff57a5e114 in start (libdyld.dylib:x86_64+0x1114)
+```

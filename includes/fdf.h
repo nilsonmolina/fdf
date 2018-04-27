@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 23:51:18 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 14:03:12 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 17:35:14 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 # define ROT_DEGREES	5
 # define MV_PIXELS		5
 # define BUF_SIZE 		500000
+# define RED			0xFF2222
+# define GREEN			0x22FF22
+# define WHITE			0xFFFFFF
+# define GREY			0xAAAAAA
 
 /*
 ** ------ STRUCTS ------
@@ -47,7 +51,7 @@ typedef struct	s_vector
 typedef struct	s_map
 {
 	t_vector	*vectors;
-	t_vector	previous;
+	t_vector	prev;
 	int			rows;
 	int			columns;
 	int			scale;	
@@ -143,7 +147,7 @@ void			free_array(void **arr);
 void			transform(t_canvas c, t_vector *v);
 void			set_scale(t_canvas *c);
 float			set_theta(int degrees);
-void			set_color(t_vector *v, t_map map);
+void			set_color(t_vector *v, t_map *map);
 /*
 ** mutate.c
 */

@@ -21,11 +21,11 @@ HEADERS = -I includes -I $(LIBDIR)/includes -I $(MLXDIR)
 # CFLAGS = -c -Wall -Werror -Wextra
 # LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
 # # debug
-# CFLAGS = -c -g -Wall -Werror -Wextra -fsanitize=address
-# LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit -fsanitize=address
+CFLAGS = -c -g -Wall -Werror -Wextra -fsanitize=address
+LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit -fsanitize=address
 
-CFLAGS = -c -g -Wall -Werror -Wextra 
-LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
+# CFLAGS = -c -g -Wall -Werror -Wextra 
+# LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
 
 
 # prevent name collisions with files in the directory.

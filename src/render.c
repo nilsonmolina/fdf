@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 13:40:46 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 18:44:13 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,60 +17,62 @@ void	clear_img(t_canvas *c)
 	mlx_destroy_image(c->mlx, c->img.img);
 	mlx_clear_window(c->mlx, c->window);
 	c->img.img = mlx_new_image(c->mlx, WIN_WIDTH - OFF_X, WIN_HEIGHT - OFF_Y);
+	c->img.data = (int *)mlx_get_data_addr(c->img.img,
+			&c->img.bpp, &c->img.sl, &c->img.e);
 }
 
-void	put_strings(t_canvas *c)
+void	put_strings(void *mlx, void *w, t_canvas *c)
 {
 	char *str;
-	
-	mlx_string_put(c->mlx, c->window, 10, 10, 0xFFFFFF, "File:");
-	mlx_string_put(c->mlx, c->window, 70, 10, 0xFFFFFF, c->filename);	
-	if (c->mode == 1)		
-		mlx_string_put(c->mlx, c->window, 20, 30, 0x22FF22, "Mode: 'put_image'");
+
+	mlx_string_put(mlx, w, 10, 10, WHITE, "File:");
+	mlx_string_put(mlx, w, 70, 10, WHITE, c->filename);
+	if (c->mode == 1)
+		mlx_string_put(mlx, w, 20, 30, GREEN, "Mode: 'put_image'");
 	else
-		mlx_string_put(c->mlx, c->window, 20, 30, 0xFF2222, "Mode: 'put_pixel'");
-	if (c->color_on == 1)		
-		mlx_string_put(c->mlx, c->window, 20, 50, 0x22FF22, "Color: 'dynamic'");
+		mlx_string_put(mlx, w, 20, 30, RED, "Mode: 'put_pixel'");
+	if (c->color_on == 1)
+		mlx_string_put(mlx, w, 20, 50, GREEN, "Color: 'dynamic'");
 	else
-		mlx_string_put(c->mlx, c->window, 20, 50, 0xFF2222, "Color: 'static'");
-	mlx_string_put(c->mlx, c->window, 20, 70, 0xAAAAAA, "Scale:");
-	mlx_string_put(c->mlx, c->window, 120, 70, 0xAAAAAA, str = ft_itoa(c->map.scale));
-	free(str);		
-	mlx_string_put(c->mlx, c->window, 20, 90, 0xAAAAAA, "Height:");
-	mlx_string_put(c->mlx, c->window, 120, 90, 0xAAAAAA, str = ft_itoa(c->map.z_height * 10));
-	free(str);	
-	mlx_string_put(c->mlx, c->window, 20, 110, 0xAAAAAA, "Rot_X:");
-	mlx_string_put(c->mlx, c->window, 120, 110, 0xAAAAAA, str = ft_itoa(c->map.rot_y));
-	free(str);	
-	mlx_string_put(c->mlx, c->window, 20, 130, 0xAAAAAA, "Rot_Y:");
-	mlx_string_put(c->mlx, c->window, 120, 130, 0xAAAAAA, str = ft_itoa(c->map.rot_x));
+		mlx_string_put(mlx, w, 20, 50, RED, "Color: 'static'");
+	mlx_string_put(mlx, w, 20, 70, GREY, "Scale:");
+	mlx_string_put(mlx, w, 120, 70, GREY, str = ft_itoa(c->map.scale));
+	free(str);
+	mlx_string_put(mlx, w, 20, 90, GREY, "Height:");
+	mlx_string_put(mlx, w, 120, 90, GREY, str = ft_itoa(c->map.z_height * 10));
+	free(str);
+	mlx_string_put(mlx, w, 20, 110, GREY, "Rot_X:");
+	mlx_string_put(mlx, w, 120, 110, GREY, str = ft_itoa(c->map.rot_y));
+	free(str);
+	mlx_string_put(mlx, w, 20, 130, GREY, "Rot_Y:");
+	mlx_string_put(mlx, w, 120, 130, GREY, str = ft_itoa(c->map.rot_x));
 	free(str);
 }
 
-void	draw_line(t_canvas *c, t_vector curr, t_vector next)
+void	draw_line(t_canvas *c, t_vector start, t_vector end)
 {
 	t_line	l;
 
-	l.dx = abs(next.x - curr.x);
-	l.sx = curr.x < next.x ? 1 : -1;
-	l.dy = abs(next.y - curr.y);
-	l.sy = curr.y < next.y ? 1 : -1;
+	l.dx = abs(end.x - start.x);
+	l.sx = start.x < end.x ? 1 : -1;
+	l.dy = abs(end.y - start.y);
+	l.sy = start.y < end.y ? 1 : -1;
 	l.err = (l.dx > l.dy ? l.dx : -l.dy) / 2;
 	while (1)
 	{
-		put_img_vector(c, curr);
-		if (curr.x == next.x && curr.y == next.y)
+		put_img_vector(c, start);
+		if (start.x == end.x && start.y == end.y)
 			break ;
 		l.e2 = l.err;
 		if (l.e2 > -l.dx)
 		{
 			l.err -= l.dy;
-			curr.x += l.sx;
+			start.x += l.sx;
 		}
 		if (l.e2 < l.dy)
 		{
 			l.err += l.dx;
-			curr.y += l.sy;
+			start.y += l.sy;
 		}
 	}
 }
@@ -94,15 +96,14 @@ void	put_img_map(t_canvas *c)
 			draw_line(c, v, down);
 			put_img_vector(c, down);
 		}
-		if (i > 0 && i % c->map.columns != 0)
-			draw_line(c, v, c->map.previous);
+		(i > 0 && i % c->map.columns != 0) ? draw_line(c, c->map.prev, v) : 0;
 		put_img_vector(c, v);
-		c->map.previous = v;
+		c->map.prev = v;
 		i++;
 	}
 	if (c->mode == 1)
 		mlx_put_image_to_window(c->mlx, c->window, c->img.img, OFF_X, OFF_Y);
-	put_strings(c);
+	put_strings(c->mlx, c->window, c);
 }
 
 void	put_img_vector(t_canvas *c, t_vector v)

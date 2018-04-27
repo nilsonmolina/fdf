@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:56 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 14:03:17 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 19:20:11 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	set_vector(t_canvas *c, t_iterator *iter, t_file *file)
 			c->map.vectors[iter->i].color = 0x22FF22;
 		else
 			c->map.vectors[iter->i].color = 0xFF22FF;
-	}		
+	}
 	free_array((void **)val);
 }
 

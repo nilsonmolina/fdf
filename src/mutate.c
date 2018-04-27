@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 19:19:40 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/25 16:54:00 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/26 17:52:27 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,26 @@ void	rotate_axis(t_canvas *c, int *axis, int degrees)
 
 void	adjust_scale(t_canvas *c, int direction)
 {
-	double s;
+	int s;
 
-	direction > 0 ? (s = c->map.scale *= 1.2) : (s = c->map.scale /= 1.2);
-	if (s < 1 && direction > 0)
-		s = 1;
-	if (s == c->map.scale && direction > 0)
+	s = c->map.scale;
+	if (direction > 0)
+	{
 		s++;
-	if (s * c->map.rows > WIN_HEIGHT * 4)
-		s = (WIN_HEIGHT * 4) / c->map.rows;
-	else if (s * c->map.columns > WIN_WIDTH * 4)
-		s = (WIN_WIDTH * 4) / c->map.columns;
+		if (s * c->map.rows > WIN_HEIGHT * 4)
+			s--;
+		else if (s * c->map.columns > WIN_WIDTH * 4)
+			s--;
+	}
+	else
+		s--;
 	if (s < 1)
 		s = 1;
-	c->map.scale = s;
-	put_img_map(c);
+	if (c->map.scale != s)
+	{
+		c->map.scale = s;
+		put_img_map(c);
+	}
 }
 
 void	move_map(t_canvas *c, int *axis, int pixels)
