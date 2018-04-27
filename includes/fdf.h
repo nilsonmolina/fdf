@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 23:51:18 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/27 01:43:15 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 02:15:15 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,9 @@ void			put_img_vector(t_canvas *c, t_vector vector);
 void			set_map(t_canvas *c);
 void			free_array(void **arr);
 /*
-** transform.c
+** prepare.c
 */
-void			transform(t_canvas c, t_vector *v);
+void			prepare(t_canvas c, t_vector *v);
 void			set_scale(t_canvas *c);
 float			set_theta(int degrees);
 void			set_color(t_vector *v, t_map *map);

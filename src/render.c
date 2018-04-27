@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/27 00:14:15 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 02:15:55 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ void	put_img_map(t_canvas *c)
 	while (i < (c->map.rows * c->map.columns))
 	{
 		v = c->map.vectors[i];
-		transform(*c, &v);
+		prepare(*c, &v);
 		if (i < (c->map.rows * c->map.columns) - c->map.columns)
 		{
 			down = c->map.vectors[i + c->map.columns];
-			transform(*c, &down);
+			prepare(*c, &down);
 			draw_line(c, v, down);
 			put_img_vector(c, down);
 		}

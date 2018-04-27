@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transform.c                                        :+:      :+:    :+:   */
+/*   prepare.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 17:23:27 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/27 01:58:43 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 02:25:04 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		transform(t_canvas c, t_vector *v)
+void		prepare(t_canvas c, t_vector *v)
 {
 	float	theta;
 	int		x;
@@ -67,8 +67,10 @@ void		set_color(t_vector *v, t_map *map)
 
 	z = v->z * (map->z_height * map->scale);
 	max_z = map->scale * map->max_z;
-	if (z >= max_z)
+	if (z >= max_z * 1.5)
 		v->color = RED;
+	else if (z >= max_z)
+		v->color = 0xFF9922;
 	else if (max_z * 0.8 <= z && z < max_z)
 		v->color = 0x999922;
 	else if (max_z * 0.6 <= z && z < max_z * 0.8)
