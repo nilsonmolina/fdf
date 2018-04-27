@@ -17,13 +17,15 @@ OBJS = $(addprefix $(OBJDIR)/, $(OBJ))
 # compiler
 CC = gcc
 HEADERS = -I includes -I $(LIBDIR)/includes -I $(MLXDIR)
-# # final
-# CFLAGS = -c -Wall -Werror -Wextra
-# LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
-# # debug
-CFLAGS = -c -g -Wall -Werror -Wextra -fsanitize=address
-LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit -fsanitize=address
+# final
+CFLAGS = -c -Wall -Werror -Wextra
+LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
 
+# # debug - fsanitize
+# CFLAGS = -c -g -Wall -Werror -Wextra -fsanitize=address
+# LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit -fsanitize=address
+
+# # debug - VSCode lldb debugger
 # CFLAGS = -c -g -Wall -Werror -Wextra 
 # LIBS = -L $(LIBDIR) -lft -L $(MLXDIR) -lmlx -framework OpenGL -framework Appkit
 
