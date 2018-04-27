@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 23:51:18 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/27 02:15:15 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 15:25:21 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+
 /*
 ** ------ LIBRARIES ------
 */
@@ -19,6 +20,7 @@
 # include "mlx.h"
 # include <math.h>
 # include <fcntl.h>
+
 /*
 ** ------ VARIABLES ------
 */
@@ -36,6 +38,7 @@
 # define WHITE			0xFFFFFF
 # define GREY			0xAAAAAA
 # define DGREY			0x444444
+
 /*
 ** ------ STRUCTS ------
 */
@@ -53,7 +56,7 @@ typedef struct	s_map
 	t_vector	prev;
 	int			rows;
 	int			columns;
-	int			scale;	
+	int			scale;
 	int			max_z;
 	float		z_height;
 	int			center_x;
