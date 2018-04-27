@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 12:48:37 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/26 21:33:11 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 15:21:32 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int		main(int argc, char **argv)
 {
 	t_canvas c;
-	
+
 	if (argc != 2)
 		usage();
-	c.filename = argv[1];		
+	c.filename = argv[1];
 	c.mlx = mlx_init();
 	c.window = mlx_new_window(c.mlx, WIN_WIDTH, WIN_HEIGHT, "nmolina fdf");
 	c.img.width = WIN_WIDTH - OFF_X;

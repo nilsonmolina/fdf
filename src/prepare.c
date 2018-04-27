@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nmolina <nmolina@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 17:23:27 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/27 02:25:04 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/27 15:20:51 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void		set_color(t_vector *v, t_map *map)
 	else if (z == 0)
 		v->color = WHITE;
 	else
-		v->color = DGREY;		
+		v->color = DGREY;
 }
