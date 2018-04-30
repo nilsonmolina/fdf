@@ -6,7 +6,7 @@
 /*   By: nmolina <nmolina@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 22:53:54 by nmolina           #+#    #+#             */
-/*   Updated: 2018/04/27 02:15:55 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/04/30 10:11:58 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	clear_img(t_canvas *c)
 {
-	mlx_clear_window(c->mlx, c->window);
-	ft_bzero(c->img.data, sizeof(int) * c->img.width * c->img.height);
+	if (c->mode == 1)
+		ft_bzero(c->img.data, sizeof(int) * c->img.width * c->img.height);
+	else
+		mlx_clear_window(c->mlx, c->window);
 }
 
 void	put_strings(void *mlx, void *w, t_canvas *c)
