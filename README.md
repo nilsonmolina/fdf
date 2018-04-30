@@ -11,7 +11,26 @@ https://github.com/qst0/ft_libgfx
 
 The Minilibx library provided on the project page of 42, will not work on macOS Sierra or newer, but fortunately, you will find an updated one here.  This is also a treasure trove of information and I recommend you spend more time there than you do here.
 
-But after that, you can consider taking a quick look at my `_resources/basics` folder. In it, I have included a few examples of a lot of the basics to get things rolling.  As a disclaimer, I wrote these when I was learning how to use MiniLibX and they are just simple attempts at testing things out. They do NOT have any best practices, they ARE very rudimentary, and there WILL be mistsakes in them. But this is how I started learning, and hopefully it may help you as well.
+The minimum code to get started with MiniLibx is the following:
+```c
+#include <mlx.h>
+
+int main(void)
+{
+  void *mlx;
+  void *window;
+  
+  mlx = mlx_init();
+  window = mlx_new_window(mlx, 1000, 1000, "Title");
+  
+  mlx_loop(mlx);
+  return (0);
+}
+```
+And to compile the above code, you can use the following:
+> gcc -Wall -Wextra -Werror -I minilibx -L minilibx -lmlx -framework OpenGL -framework AppKit main.c
+
+To learn more of the basics, you can consider taking a quick look at my `_resources/basics` folder. In it, I have included a few examples of a lot of the basics to get things rolling.  As a disclaimer, I wrote these when I was learning how to use MiniLibX and they are just simple attempts at testing things out. They do NOT have any best practices, they ARE very rudimentary, and there WILL be mistsakes in them. But this is how I started learning, and hopefully it will help you as well.
 1. [Put Pixel](./_resources/_basics/01-put-pixel/main.c)  
     In this example, I simply open an mlx window of a predetermined size (400x400 pixels) and draw a 100 by 100 pixel square. A lot of what you see here is the basis of all minilibx projects.
 1. [Events](./_resources/_basics/02-events/main.c)  
